@@ -26,7 +26,6 @@
         "cookie-session": "^2.0.0-alpha.2",
         "csurf": "^1.9.0",
         "eslint": "^4.19.1",
-        "eslint-plugin-react": "^7.12.4",
         "express": "^4.14.0",
         "http-proxy-middleware": "^0.19.1",
         "jest": "^24.7.1",
@@ -54,5 +53,8 @@
     },
     "keywords": [],
     "author": "",
-    "license": "ISC"
+    "license": "ISC",
+    "devDependencies": {
+        "eslint-plugin-react": "^7.14.3"
+    }
 }
