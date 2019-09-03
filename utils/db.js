@@ -1,5 +1,4 @@
 const spicedPg = require("spiced-pg");
-// const db = spicedPg("postgres:postgres:postgres@localhost:5432/petition");
 
 const db = spicedPg(
     process.env.DATABASE_URL ||
@@ -10,21 +9,20 @@ exports.testFunction = function() {
     console.log("db is working");
 };
 
-exports.addUser = function(firstname, lastname, email, hash) {
+exports.addUser = function(first, last, email, hash) {
     return db.query(
-        `INSERT INTO users (firstname, lastname, email, password)
+        `INSERT INTO users (first, last, email, password)
         VALUES ($1, $2, $3, $4)
-        RETURNING id, firstname
+        RETURNING id, first
         `,
-        [firstname, lastname, email, hash]
+        [first, last, email, hash]
     );
 };
 
 exports.getHash = function(email) {
-    return db.query(
-        `SELECT password, id, firstname FROM users WHERE email = $1`,
-        [email]
-    );
+    return db.query(`SELECT password, id, first FROM users WHERE email = $1`, [
+        email
+    ]);
 };
 
 exports.addProfile = function(age, city, url, user_id) {
@@ -39,7 +37,7 @@ exports.addProfile = function(age, city, url, user_id) {
 
 exports.getUser = function(id) {
     return db.query(
-        `SELECT firstname, lastname, email, age, city, url
+        `SELECT first, last, email, age, city, url
         FROM users
         LEFT OUTER JOIN user_profiles
         ON users.id = user_profiles.user_id
@@ -60,26 +58,26 @@ exports.editProfile = function(age, city, url, id) {
     );
 };
 
-exports.editUser = function(firstname, lastname, email, id) {
+exports.editUser = function(first, last, email, id) {
     return db.query(
         `
         UPDATE users
-        SET firstname = $1, lastname = $2, email = $3
+        SET first = $1, last = $2, email = $3
         WHERE id = $4
-        RETURNING firstname
+        RETURNING first
         `,
-        [firstname, lastname, email, id]
+        [first, last, email, id]
     );
 };
 
-exports.editUserAndPass = function(firstname, lastname, email, id, hash) {
+exports.editUserAndPass = function(first, last, email, id, hash) {
     return db.query(
         `
         UPDATE users
-        SET firstname = $1, lastname = $2, email = $3, password = $5
+        SET first = $1, last = $2, email = $3, password = $5
         WHERE id = $4
-        RETURNING firstname
+        RETURNING first
         `,
-        [firstname, lastname, email, id, hash]
+        [first, last, email, id, hash]
     );
 };

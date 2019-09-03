@@ -4,41 +4,52 @@ import axios from "axios";
 export default class Registration extends React.Component {
     constructor(props) {
         super(props);
-        this.handleChange = this.handleChange.bind(this); //importan, always has to be done to bind "this" to the class so this doesnt refer to the global object. is solution to error "cannon read property of setState is undefined"
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.state = {
+            error: ""
+        };
     }
 
     handleChange(e) {
-        //this.setState to PUT information in state
-        // console.log("e.target.name", e.target.name);
-        this.setState(
-            {
-                [e.target.name]: e.target.value //not an array but a way of telling object that e.target.name is a variable
-            },
-            () => console.log(this.state)
-        );
+        this.setState({
+            [e.target.name]: e.target.value
+        });
     }
 
     handleSubmit(e) {
-        e.preventDefault();
         axios
-            .post(
-                "/registration/",
-                this.target.first,
-                this.target.last,
-                this.target.email,
-                this.target.password
-            )
+            .post("/registration", {
+                first: this.state.first,
+                last: this.state.last,
+                email: this.state.email,
+                password: this.state.password
+            })
             .then(res => {
-                console.log(res);
+                if (res.data.message == "error") {
+                    console.log(res.data.message);
+                    this.setState({
+                        first: "",
+                        last: "",
+                        email: "",
+                        password: "",
+                        error: "Whoops something went wrong. Please try again!"
+                    });
+                    console.log(this.state);
+                } else {
+                    location.replace("/");
+                }
             })
             .catch(err => {
                 console.log(err);
             });
+        e.preventDefault();
     }
 
     render() {
         return (
             <div>
+                <p>{this.state.error}</p>
                 <form>
                     <input
                         name="first"
@@ -66,11 +77,11 @@ export default class Registration extends React.Component {
                         onChange={this.handleChange}
                     />
                     <br />
-                    <button name="submit" value="submit" />
+                    <button onClick={this.handleSubmit} name="submit">
+                        Sign up
+                    </button>
                 </form>
             </div>
-            //onChange = {e => this.handleChange}, if using an arrow function then this is binded to the class and it works
-            //make an axios request when button is clicked
         );
     }
 }
