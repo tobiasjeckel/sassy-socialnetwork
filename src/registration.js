@@ -27,15 +27,9 @@ export default class Registration extends React.Component {
             })
             .then(res => {
                 if (res.data.message == "error") {
-                    console.log(res.data.message);
-                    this.setState({
-                        first: "",
-                        last: "",
-                        email: "",
-                        password: "",
-                        error: "Whoops something went wrong. Please try again!"
-                    });
-                    console.log(this.state);
+                    // console.log(res.data.message);
+                    this.handleError();
+                    // console.log(this.state);
                 } else {
                     location.replace("/");
                 }
@@ -44,6 +38,12 @@ export default class Registration extends React.Component {
                 console.log(err);
             });
         e.preventDefault();
+    }
+
+    handleError() {
+        this.setState({
+            error: "Whoops something went wrong. Please try again!"
+        });
     }
 
     render() {
