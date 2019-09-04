@@ -15,7 +15,7 @@ app.use(
         secret:
             process.env.NODE_ENV == "production"
                 ? process.env.SESS_SECRET
-                : require("./.secrets").sessionSecret,
+                : require("./secrets").sessionSecret,
         maxAge: 1000 * 60 * 60 * 24 * 14
     })
 );
@@ -63,7 +63,6 @@ app.post("/registration", (req, res) => {
                     res.json({
                         message: "error"
                     });
-                    // res.sendStatus(404);
                 });
         })
         .catch(err => {
@@ -106,9 +105,17 @@ app.post("/login", (req, res) => {
         });
 });
 
-//all other get routes need to be before this
-app.get("*", (req, res) => {
+app.get("/welcome", (req, res) => {
+    // res.render();
     res.sendFile(__dirname + "/index.html");
+});
+
+app.get("*", (req, res) => {
+    if (req.session.id) {
+        res.sendFile(__dirname + "/index.html");
+    } else {
+        res.redirect("/welcome");
+    }
 });
 
 app.listen(8080, () => {

@@ -12,4 +12,5 @@ export default class Logo extends React.Component {
             </div>
         );
     }
+    getName() {}
 }
