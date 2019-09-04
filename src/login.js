@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 
-export default class Registration extends React.Component {
+export default class Login extends React.Component {
     constructor(props) {
         super(props);
         this.handleChange = this.handleChange.bind(this);
@@ -19,13 +19,12 @@ export default class Registration extends React.Component {
 
     handleSubmit(e) {
         axios
-            .post("/registration", {
-                first: this.state.first,
-                last: this.state.last,
+            .post("/login", {
                 email: this.state.email,
                 password: this.state.password
             })
             .then(res => {
+                console.log(res.data.message);
                 if (res.data.message == "error") {
                     // console.log(res.data.message);
                     this.handleError();
@@ -54,18 +53,6 @@ export default class Registration extends React.Component {
                 )}
                 <form>
                     <input
-                        name="first"
-                        placeholder="first"
-                        onChange={this.handleChange}
-                    />
-                    <br />
-                    <input
-                        name="last"
-                        placeholder="last"
-                        onChange={this.handleChange}
-                    />
-                    <br />
-                    <input
                         type="email"
                         name="email"
                         placeholder="email"
@@ -80,7 +67,7 @@ export default class Registration extends React.Component {
                     />
                     <br />
                     <button onClick={this.handleSubmit} name="submit">
-                        Sign up
+                        Log in
                     </button>
                 </form>
             </div>

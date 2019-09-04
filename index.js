@@ -64,9 +64,46 @@ app.post("/registration", (req, res) => {
         });
 });
 
-// app.get("/", (req,res) => {
-//
-// })
+app.post("/login", (req, res) => {
+    // console.log(
+    //     "entered passoword and email is :",
+    //     req.body.password,
+    //     req.body.email
+    // );
+    db.getHash(req.body.email)
+        .then(data => {
+            bc.compare(req.body.password, data.rows[0].password)
+                .then(match => {
+                    if (match) {
+                        req.session.id = data.rows[0].id;
+                        req.session.first = data.rows[0].first;
+                        res.json({
+                            message: "Login successful"
+                        });
+                    } else {
+                        res.json({
+                            message: "error"
+                        });
+                    }
+                })
+                .catch(err => {
+                    console.log("error when comparing password: ", err);
+                    res.json({
+                        message: "error"
+                    });
+                });
+        })
+        .catch(err => {
+            console.log(
+                "error when getting the hash: email probably doest exist",
+                err
+            );
+            res.json({
+                message: "error"
+            });
+        });
+});
+
 //all other get routes need to be before this
 app.get("*", (req, res) => {
     res.sendFile(__dirname + "/index.html");
