@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Welcome from "./welcome";
+import Logo from "./logo";
 
 let elem;
 
@@ -9,9 +10,9 @@ if (location.pathname == "/welcome") {
     elem = <Welcome />;
 } else {
     //user is logged in
-    elem = (
-        <img src="https://cdn.vox-cdn.com/thumbor/yQidk0r257q3yR9mQvZEQQnNInE=/800x0/filters:no_upscale()/cdn.vox-cdn.com/uploads/chorus_asset/file/8688491/hiE5vMs.gif" />
-    );
+    elem = <Logo />;
 }
 
 ReactDOM.render(elem, document.querySelector("main"));
+
+//elem = <img src="assets/under-construction.gif" />;

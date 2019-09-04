@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "axios";
+import axios from "./axios";
 
 export default class Login extends React.Component {
     constructor(props) {
@@ -24,13 +24,14 @@ export default class Login extends React.Component {
                 password: this.state.password
             })
             .then(res => {
-                console.log(res.data.message);
                 if (res.data.message == "error") {
                     // console.log(res.data.message);
                     this.handleError();
                     // console.log(this.state);
                 } else {
                     location.replace("/");
+                    console.log(res.data.message);
+                    console.log(res.session.id);
                 }
             })
             .catch(err => {

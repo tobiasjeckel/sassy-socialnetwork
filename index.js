@@ -4,25 +4,35 @@ const compression = require("compression");
 const bc = require("./utils/bc");
 const db = require("./utils/db");
 const cookieSession = require("cookie-session");
+const csurf = require("csurf");
 
 //middleware
-
 app.use(compression());
+app.use(express.json());
+
 app.use(
     cookieSession({
-        secret: `supersecret`,
+        secret:
+            process.env.NODE_ENV == "production"
+                ? process.env.SESS_SECRET
+                : require("./.secrets").sessionSecret,
         maxAge: 1000 * 60 * 60 * 24 * 14
     })
 );
+
+app.use(csurf());
+
+app.use(function(req, res, next) {
+    res.cookie("mytoken", req.csrfToken());
+    next();
+});
 
 // app.use(
 //     express.urlencoded({
 //         extended: false
 //     })
 // );
-// app.use(express.static("./public")); //for css
-
-app.use(express.json());
+app.use(express.static("./public")); //for css
 
 if (process.env.NODE_ENV != "production") {
     app.use(
@@ -65,11 +75,6 @@ app.post("/registration", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-    // console.log(
-    //     "entered passoword and email is :",
-    //     req.body.password,
-    //     req.body.email
-    // );
     db.getHash(req.body.email)
         .then(data => {
             bc.compare(req.body.password, data.rows[0].password)
@@ -94,10 +99,7 @@ app.post("/login", (req, res) => {
                 });
         })
         .catch(err => {
-            console.log(
-                "error when getting the hash: email probably doest exist",
-                err
-            );
+            console.log("error when comparing the hash", err);
             res.json({
                 message: "error"
             });
