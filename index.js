@@ -5,7 +5,30 @@ const bc = require("./utils/bc");
 const db = require("./utils/db");
 const cookieSession = require("cookie-session");
 const csurf = require("csurf");
+//file upload
+const multer = require("multer");
+const uidSafe = require("uid-safe");
+const path = require("path");
+const s3 = require("./s3");
+const config = require("./config");
 
+const diskStorage = multer.diskStorage({
+    destination: function(req, file, callback) {
+        callback(null, __dirname + "/uploads");
+    },
+    filename: function(req, file, callback) {
+        uidSafe(24).then(function(uid) {
+            callback(null, uid + path.extname(file.originalname));
+        });
+    }
+});
+
+const uploader = multer({
+    storage: diskStorage,
+    limits: {
+        fileSize: 2097152
+    }
+});
 //middleware
 app.use(compression());
 app.use(express.json());
@@ -102,6 +125,21 @@ app.post("/login", (req, res) => {
             res.json({
                 message: "error"
             });
+        });
+});
+
+app.post("/uploadAvatar", uploader.single("file"), s3.upload, (req, res) => {
+    const { filename } = req.file;
+    const url = config.s3Url + filename;
+    // const { title, username, description } = req.body;
+
+    db.uploadAvatar(req.session.id, url)
+        .then(data => {
+            res.json(data.rows[0]);
+            // console.log("log of data from index.js", data.rows);
+        })
+        .catch(err => {
+            console.log("error when adding image to database: ", err);
         });
 });
 

@@ -8,9 +8,12 @@ export class App extends React.Component {
     constructor() {
         super();
         this.state = {
-            uploaderIsVisible: false
+            uploaderIsVisible: false,
+            avatarurl: ""
         };
+        this.getUser = this.getUser.bind(this);
         this.showModal = this.showModal.bind(this);
+        this.setAvatarUrl = this.setAvatarUrl.bind(this);
     }
 
     componentDidMount() {
@@ -37,6 +40,11 @@ export class App extends React.Component {
             uploaderIsVisible: true
         });
     }
+    setAvatarUrl(avatarurl) {
+        this.setState({
+            avatarurl: avatarurl
+        });
+    }
 
     render() {
         return (
@@ -52,7 +60,9 @@ export class App extends React.Component {
                     avatarurl={this.state.avatarurl}
                     showModal={this.showModal}
                 />
-                {this.state.uploaderIsVisible && <Uploader />}
+                {this.state.uploaderIsVisible && (
+                    <Uploader setAvatarUrl={this.setAvatarUrl} />
+                )}
             </div>
         );
     }

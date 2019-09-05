@@ -45,6 +45,17 @@ exports.getUser = function(id) {
     );
 };
 
+exports.uploadAvatar = function(id, avatarurl) {
+    return db.query(
+        `UPDATE users
+        SET avatarurl = $2
+        WHERE id = $1
+        RETURNING avatarurl
+        `,
+        [id, avatarurl]
+    );
+};
+
 exports.editProfile = function(age, city, url, id) {
     return db.query(
         `INSERT INTO user_profiles (age, city, url, user_id)
