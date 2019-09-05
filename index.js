@@ -143,6 +143,10 @@ app.post("/uploadAvatar", uploader.single("file"), s3.upload, (req, res) => {
         });
 });
 
+app.get("/logout", function(req, res) {
+    req.session = null;
+    res.redirect("/welcome");
+});
 app.get("/welcome", (req, res) => {
     // res.render();
     res.sendFile(__dirname + "/index.html");

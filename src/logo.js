@@ -7,7 +7,6 @@ export default class Logo extends React.Component {
     render() {
         return (
             <div>
-                <p>Hi </p>
                 <img src="assets/myspaceLogoDotcom.gif" />
             </div>
         );

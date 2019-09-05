@@ -1,5 +1,25 @@
 * {
     box-sizing: border-box;
-    background-color: lightblue;
     font-family: Verdana, Arial;
+}
+
+body {
+    background-color: lightgrey;
+    margin: 0;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    background-color: lightblue;
+}
+
+.avatar {
+    width: 100px;
+    height: 100px;
+}
+
+.avatar img {
+    height: 100%;
+    width: 100%;
 }

@@ -11,6 +11,7 @@ export default class Uploader extends React.Component {
     render() {
         return (
             <div>
+                <h1 onClick={this.props.hideModal}>X</h1>
                 <h3>Upload your profile picture here!</h3>
                 <form>
                     <input
@@ -34,9 +35,12 @@ export default class Uploader extends React.Component {
         axios
             .post("/uploadAvatar", formData)
             .then(res => {
-                console.log(res);
+                // console.log(res);
                 document.getElementById("fileinput").value = ""; //clear file input field
                 this.props.setAvatarUrl(res.data.avatarurl); //write this in app.js
+            })
+            .then(() => {
+                this.props.hideModal();
             })
             .catch(err => {
                 console.log("err in post: ", err);
@@ -45,6 +49,6 @@ export default class Uploader extends React.Component {
 
     handleChange(e) {
         this.setState({ file: e.target.files[0] });
-        console.log(this.state);
+        // console.log(this.state);
     }
 }

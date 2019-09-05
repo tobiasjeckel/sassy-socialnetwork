@@ -3,6 +3,7 @@ import axios from "./axios";
 import Avatar from "./avatar";
 import Uploader from "./uploader";
 import Logo from "./logo";
+// import { Link } from "react-router-dom";
 
 export class App extends React.Component {
     constructor() {
@@ -14,6 +15,7 @@ export class App extends React.Component {
         this.getUser = this.getUser.bind(this);
         this.showModal = this.showModal.bind(this);
         this.setAvatarUrl = this.setAvatarUrl.bind(this);
+        this.hideModal = this.hideModal.bind(this);
     }
 
     componentDidMount() {
@@ -40,29 +42,53 @@ export class App extends React.Component {
             uploaderIsVisible: true
         });
     }
+
+    hideModal() {
+        //hide the modal
+        this.setState({
+            uploaderIsVisible: false
+        });
+    }
+
     setAvatarUrl(avatarurl) {
         this.setState({
             avatarurl: avatarurl
         });
     }
 
+    // logOutLink() {
+    //     return <Link to="/logout">Log out</Link>;
+    // }
+
     render() {
         return (
             <div>
-                <div>
-                    <Logo />
+                <div className="header">
+                    <div className="logo">
+                        <Logo />
+                    </div>
+                    <div className="logout">
+                        <h3>
+                            <a href="/logout">Log out</a>
+                        </h3>
+                    </div>
+                    <div className="avatar">
+                        <Avatar
+                            first={this.state.first}
+                            last={this.state.last}
+                            avatarurl={this.state.avatarurl}
+                            showModal={this.showModal}
+                        />
+                    </div>
                 </div>
-                <h1> HI from App.</h1>
-
-                <Avatar
-                    first={this.state.first}
-                    last={this.state.last}
-                    avatarurl={this.state.avatarurl}
-                    showModal={this.showModal}
-                />
-                {this.state.uploaderIsVisible && (
-                    <Uploader setAvatarUrl={this.setAvatarUrl} />
-                )}
+                <div>
+                    {this.state.uploaderIsVisible && (
+                        <Uploader
+                            setAvatarUrl={this.setAvatarUrl}
+                            hideModal={this.hideModal}
+                        />
+                    )}
+                </div>
             </div>
         );
     }
