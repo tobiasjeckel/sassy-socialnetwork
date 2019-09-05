@@ -37,10 +37,8 @@ exports.addProfile = function(age, city, url, user_id) {
 
 exports.getUser = function(id) {
     return db.query(
-        `SELECT first, last, email, age, city, url
+        `SELECT first, last, avatarurl
         FROM users
-        LEFT OUTER JOIN user_profiles
-        ON users.id = user_profiles.user_id
         WHERE users.id = $1
         `,
         [id]

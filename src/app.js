@@ -8,9 +8,6 @@ export class App extends React.Component {
     constructor() {
         super();
         this.state = {
-            first: "Tobias",
-            last: "Jay",
-            imageurl: "",
             uploaderIsVisible: false
         };
         this.showModal = this.showModal.bind(this);
@@ -18,9 +15,20 @@ export class App extends React.Component {
 
     componentDidMount() {
         console.log("App mounted!");
+        this.getUser();
         //make an axios request to server, it will do a dbquery to find out info from user
         //use the id stored in cookie to do the lookup
         //when we have the info we can add it to state using setState
+    }
+
+    getUser() {
+        axios.get("/user", {}).then(res => {
+            this.setState({
+                first: res.data.first,
+                last: res.data.last,
+                avatarurl: res.data.avatarurl
+            });
+        });
     }
 
     showModal() {
@@ -41,7 +49,7 @@ export class App extends React.Component {
                 <Avatar
                     first={this.state.first}
                     last={this.state.last}
-                    imageurl={this.state.imageurl}
+                    avatarurl={this.state.avatarurl}
                     showModal={this.showModal}
                 />
                 {this.state.uploaderIsVisible && <Uploader />}

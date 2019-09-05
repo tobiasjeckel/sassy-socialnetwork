@@ -1,15 +1,17 @@
 import React from "react";
 
 export default function Avatar(props) {
-    console.log("imageurl: ", props.imageurl);
-    let imageurl = props.imageurl || "/assets/defaultuser.png";
+    console.log("avatarurl: ", props.avatarurl);
+    let avatarurl = props.avatarurl || "/assets/defaultuser.png";
+    // let fullName = { ...props.first, ...props.last };
+    let fullName = props.first + " " + props.last;
+    console.log(fullName);
     return (
         <div>
             <h2>
-                I am the avatar component. My name is: {props.first}{" "}
-                {props.last}
+                I am a myspace user. My name is: {props.first} {props.last}
             </h2>
-            <img onClick={props.showModal} src={imageurl} />
+            <img onClick={props.showModal} src={avatarurl} alt={fullName} />
         </div>
     );
 }

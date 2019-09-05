@@ -110,6 +110,20 @@ app.get("/welcome", (req, res) => {
     res.sendFile(__dirname + "/index.html");
 });
 
+app.get("/user", (req, res) => {
+    db.getUser(req.session.id)
+        .then(data => {
+            res.json({
+                first: data.rows[0].first,
+                last: data.rows[0].last,
+                avatarurl: data.rows[0].avatarurl
+            });
+        })
+        .catch(err => {
+            console.log("error when getting user data: ", err);
+        });
+});
+
 app.get("*", (req, res) => {
     if (req.session.id) {
         res.sendFile(__dirname + "/index.html");
