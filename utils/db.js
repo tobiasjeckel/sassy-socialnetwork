@@ -25,23 +25,24 @@ exports.getHash = function(email) {
     ]);
 };
 
-exports.addProfile = function(age, city, url, user_id) {
-    return db.query(
-        `INSERT INTO user_profiles (age, city, url, user_id)
-        VALUES ($1, $2, $3, $4)
-        RETURNING user_id
-        `,
-        [age || null, city || null, url || null, user_id]
-    );
-};
-
 exports.getUser = function(id) {
     return db.query(
-        `SELECT first, last, avatarurl
+        `SELECT first, last, avatarurl, bio
         FROM users
         WHERE users.id = $1
         `,
         [id]
+    );
+};
+
+exports.editBio = function(id, bio) {
+    return db.query(
+        `UPDATE users
+        SET bio = $2
+        WHERE id = $1
+        RETURNING bio
+        `,
+        [id, bio]
     );
 };
 
@@ -53,40 +54,5 @@ exports.uploadAvatar = function(id, avatarurl) {
         RETURNING avatarurl
         `,
         [id, avatarurl]
-    );
-};
-
-exports.editProfile = function(age, city, url, id) {
-    return db.query(
-        `INSERT INTO user_profiles (age, city, url, user_id)
-        VALUES ($1, $2, $3, $4)
-        ON CONFLICT (user_id)
-        DO UPDATE SET age = $1, city = $2, url = $3
-        `,
-        [age || null, city || null, url || null, id]
-    );
-};
-
-exports.editUser = function(first, last, email, id) {
-    return db.query(
-        `
-        UPDATE users
-        SET first = $1, last = $2, email = $3
-        WHERE id = $4
-        RETURNING first
-        `,
-        [first, last, email, id]
-    );
-};
-
-exports.editUserAndPass = function(first, last, email, id, hash) {
-    return db.query(
-        `
-        UPDATE users
-        SET first = $1, last = $2, email = $3, password = $5
-        WHERE id = $4
-        RETURNING first
-        `,
-        [first, last, email, id, hash]
     );
 };

@@ -3,6 +3,7 @@ import axios from "./axios";
 import Avatar from "./avatar";
 import Uploader from "./uploader";
 import Logo from "./logo";
+import Profile from "./profile";
 // import { Link } from "react-router-dom";
 
 export class App extends React.Component {
@@ -88,6 +89,17 @@ export class App extends React.Component {
                             hideModal={this.hideModal}
                         />
                     )}
+                </div>
+                <div>
+                    <Profile
+                        id={this.state.id}
+                        first={this.state.first}
+                        last={this.state.last}
+                        avatarurl={this.state.avatarurl}
+                        showModal={this.showModal}
+                        bio={this.state.bio}
+                        setBio={this.setBio}
+                    />
                 </div>
             </div>
         );

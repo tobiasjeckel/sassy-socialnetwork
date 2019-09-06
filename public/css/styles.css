@@ -15,11 +15,21 @@ body {
 }
 
 .avatar {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
 }
 
 .avatar img {
+    height: 100%;
+    width: 100%;
+}
+
+.largeAvatar {
+    width: 240px;
+    height: 240px;
+}
+
+.largeAvatar img {
     height: 100%;
     width: 100%;
 }
