@@ -36,7 +36,7 @@ export default class Uploader extends React.Component {
             .post("/uploadAvatar", formData)
             .then(res => {
                 // console.log(res);
-                document.getElementById("fileinput").value = ""; //clear file input field
+                // document.getElementById("fileinput").value = ""; //clear file input field
                 this.props.setAvatarUrl(res.data.avatarurl); //write this in app.js
             })
             .then(() => {
@@ -49,6 +49,5 @@ export default class Uploader extends React.Component {
 
     handleChange(e) {
         this.setState({ file: e.target.files[0] });
-        // console.log(this.state);
     }
 }

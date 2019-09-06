@@ -17,14 +17,12 @@ export class App extends React.Component {
         this.showModal = this.showModal.bind(this);
         this.setAvatarUrl = this.setAvatarUrl.bind(this);
         this.hideModal = this.hideModal.bind(this);
+        this.setBio = this.setBio.bind(this);
     }
 
     componentDidMount() {
         console.log("App mounted!");
         this.getUser();
-        //make an axios request to server, it will do a dbquery to find out info from user
-        //use the id stored in cookie to do the lookup
-        //when we have the info we can add it to state using setState
     }
 
     getUser() {
@@ -38,7 +36,6 @@ export class App extends React.Component {
     }
 
     showModal() {
-        console.log("show modal is running");
         this.setState({
             uploaderIsVisible: true
         });
@@ -56,10 +53,9 @@ export class App extends React.Component {
             avatarurl: avatarurl
         });
     }
-
-    // logOutLink() {
-    //     return <Link to="/logout">Log out</Link>;
-    // }
+    setBio(biotext) {
+        this.setState({ bio: biotext });
+    }
 
     render() {
         return (

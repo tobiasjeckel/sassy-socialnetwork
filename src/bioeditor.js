@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "./axios";
 
 export class BioEditor extends React.Component {
     constructor() {
@@ -6,28 +7,79 @@ export class BioEditor extends React.Component {
         this.state = {
             editMode: false
         };
+        this.editMode = this.editMode.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+        this.hideEdit = this.hideEdit.bind(this);
     }
     componentDidMount() {
         console.log("BioEditor mounted");
+        // console.log(this.state);
     }
+    editMode(e) {
+        e.preventDefault(e);
+        this.setState({
+            editMode: true
+        });
+        // console.log(this.state.editMode);
+    }
+
+    handleClick(e) {
+        e.preventDefault(e);
+        axios
+            .post("/editBio", {
+                bio: this.state.bio
+            })
+            .then(res => {
+                //push up to app
+                console.log("the entered bio is: ", res.data.bio);
+                this.props.setBio(res.data.bio);
+                document.getElementById("bioedit").value = ""; //clear file input field
+            })
+            .then(() => {
+                this.hideEdit();
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
+
+    hideEdit() {
+        this.setState({
+            editMode: false
+        });
+    }
+
+    handleChange(e) {
+        this.setState({
+            [e.target.name]: e.target.value
+        });
+    }
+
     render() {
         let elem = (
             <div>
-                {this.props.bio} <button>Edit</button>
+                <h2>This is my bio:{this.props.bio}</h2>
+                <button onClick={this.editMode}>Edit Bio</button>
             </div>
         );
+        // let elem = "";
         if (this.state.editMode) {
+            // console.log(elem);
             elem = (
                 <div>
-                    <textarea>
-                        {" "}
-                        <button>Save</button>{" "}
-                    </textarea>
+                    <h2>Tell us something about yourself 😀 </h2>
+                    <textarea
+                        name="bio"
+                        id="bioedit"
+                        placeholder=""
+                        onChange={this.handleChange}
+                    ></textarea>
+                    <button onClick={this.handleClick}>Save</button>
                 </div>
             );
-        } else if (!this.props.bio) {
-            elem = "";
         }
+
         return elem;
     }
 }

@@ -143,6 +143,16 @@ app.post("/uploadAvatar", uploader.single("file"), s3.upload, (req, res) => {
         });
 });
 
+app.post("/editBio", (req, res) => {
+    db.editBio(req.session.id, req.body.bio)
+        .then(data => {
+            res.json(data.rows[0]);
+        })
+        .catch(err => {
+            console.log("error when updating bio: ", err);
+        });
+});
+
 app.get("/logout", function(req, res) {
     req.session = null;
     res.redirect("/welcome");
