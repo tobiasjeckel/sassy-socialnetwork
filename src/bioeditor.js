@@ -59,7 +59,7 @@ export class BioEditor extends React.Component {
     render() {
         let elem = (
             <div>
-                <h2>This is my bio:{this.props.bio}</h2>
+                <p>{this.props.bio}</p>
                 <button onClick={this.editMode}>Edit Bio</button>
             </div>
         );
@@ -68,7 +68,7 @@ export class BioEditor extends React.Component {
             // console.log(elem);
             elem = (
                 <div>
-                    <h2>Tell us something about yourself 😀 </h2>
+                    <h2>Type here to edit your bio</h2>
                     <textarea
                         name="bio"
                         id="bioedit"
@@ -76,6 +76,14 @@ export class BioEditor extends React.Component {
                         onChange={this.handleChange}
                     ></textarea>
                     <button onClick={this.handleClick}>Save</button>
+                </div>
+            );
+            return elem;
+        } else if (!this.props.bio) {
+            elem = (
+                <div>
+                    <h2>Tell us something about yourself 😀</h2>
+                    <button onClick={this.editMode}>Add Bio</button>
                 </div>
             );
         }

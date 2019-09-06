@@ -10,18 +10,17 @@ export class App extends React.Component {
     constructor() {
         super();
         this.state = {
-            uploaderIsVisible: false,
-            avatarurl: ""
+            uploaderIsVisible: false
         };
         this.getUser = this.getUser.bind(this);
         this.showModal = this.showModal.bind(this);
         this.setAvatarUrl = this.setAvatarUrl.bind(this);
         this.hideModal = this.hideModal.bind(this);
         this.setBio = this.setBio.bind(this);
+        this.componentDidMount = this.componentDidMount(this);
     }
 
     componentDidMount() {
-        console.log("App mounted!");
         this.getUser();
     }
 
@@ -30,7 +29,8 @@ export class App extends React.Component {
             this.setState({
                 first: res.data.first,
                 last: res.data.last,
-                avatarurl: res.data.avatarurl
+                avatarurl: res.data.avatarurl,
+                bio: res.data.bio
             });
         });
     }

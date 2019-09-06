@@ -165,10 +165,12 @@ app.get("/welcome", (req, res) => {
 app.get("/user", (req, res) => {
     db.getUser(req.session.id)
         .then(data => {
+            // console.log(data.rows[0]);
             res.json({
                 first: data.rows[0].first,
                 last: data.rows[0].last,
-                avatarurl: data.rows[0].avatarurl
+                avatarurl: data.rows[0].avatarurl,
+                bio: data.rows[0].bio
             });
         })
         .catch(err => {
