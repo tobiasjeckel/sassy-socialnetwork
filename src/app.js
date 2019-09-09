@@ -4,7 +4,8 @@ import Avatar from "./avatar";
 import Uploader from "./uploader";
 import Logo from "./logo";
 import Profile from "./profile";
-// import { Link } from "react-router-dom";
+import { OtherProfile } from "./otherprofile";
+import { BrowserRouter, Route, Link } from "react-router-dom";
 
 export class App extends React.Component {
     constructor() {
@@ -60,24 +61,48 @@ export class App extends React.Component {
     render() {
         return (
             <div>
-                <div className="header">
-                    <div className="logo">
-                        <Logo />
-                    </div>
-                    <div className="logout">
-                        <h3>
-                            <a href="/logout">Log out</a>
-                        </h3>
-                    </div>
-                    <div className="avatar">
-                        <Avatar
-                            first={this.state.first}
-                            last={this.state.last}
-                            avatarurl={this.state.avatarurl}
-                            showModal={this.showModal}
+                <BrowserRouter>
+                    <div>
+                        <Route
+                            exact
+                            path="/"
+                            render={() => (
+                                <div>
+                                    <div className="header">
+                                        <div className="logo">
+                                            <Logo />
+                                        </div>
+                                        <div className="logout">
+                                            <h3>
+                                                <a href="/logout">Log out</a>
+                                            </h3>
+                                        </div>
+                                        <div className="avatar">
+                                            <Avatar
+                                                first={this.state.first}
+                                                last={this.state.last}
+                                                avatarurl={this.state.avatarurl}
+                                                showModal={this.showModal}
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <Profile
+                                            id={this.state.id}
+                                            first={this.state.first}
+                                            last={this.state.last}
+                                            avatarurl={this.state.avatarurl}
+                                            showModal={this.showModal}
+                                            bio={this.state.bio}
+                                            setBio={this.setBio}
+                                        />
+                                    </div>
+                                </div>
+                            )}
                         />
                     </div>
-                </div>
+                </BrowserRouter>
                 <div>
                     {this.state.uploaderIsVisible && (
                         <Uploader
@@ -85,17 +110,6 @@ export class App extends React.Component {
                             hideModal={this.hideModal}
                         />
                     )}
-                </div>
-                <div>
-                    <Profile
-                        id={this.state.id}
-                        first={this.state.first}
-                        last={this.state.last}
-                        avatarurl={this.state.avatarurl}
-                        showModal={this.showModal}
-                        bio={this.state.bio}
-                        setBio={this.setBio}
-                    />
                 </div>
             </div>
         );
