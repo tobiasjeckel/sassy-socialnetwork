@@ -5,7 +5,7 @@ import Uploader from "./uploader";
 import Logo from "./logo";
 import Profile from "./profile";
 import { OtherProfile } from "./otherprofile";
-import { BrowserRouter, Route, Link } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
 
 export class App extends React.Component {
     constructor() {
@@ -72,7 +72,7 @@ export class App extends React.Component {
                                     <a href="/logout">Log out</a>
                                 </h3>
                             </div>
-                            <div className="avatar">
+                            <div>
                                 <Avatar
                                     first={this.state.first}
                                     last={this.state.last}

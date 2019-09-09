@@ -22,14 +22,10 @@ body {
 .avatar img {
     height: 100%;
     width: 100%;
+    object-fit: cover;
 }
 
-.largeAvatar {
+.largeAvatar .avatar {
     width: 240px;
     height: 240px;
-}
-
-.largeAvatar img {
-    height: 100%;
-    /* width: 100%; */
 }

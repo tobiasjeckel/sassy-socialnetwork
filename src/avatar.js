@@ -7,7 +7,7 @@ export default function Avatar(props) {
     let fullName = props.first + " " + props.last;
     // console.log(fullName);
     return (
-        <div>
+        <div className="avatar">
             <img onClick={props.showModal} src={avatarurl} alt={fullName} />
         </div>
     );
