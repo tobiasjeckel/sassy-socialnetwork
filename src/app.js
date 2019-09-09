@@ -26,7 +26,7 @@ export class App extends React.Component {
     }
 
     getUser() {
-        axios.get("/user", {}).then(res => {
+        axios.get("/api/myuser", {}).then(res => {
             this.setState({
                 first: res.data.first,
                 last: res.data.last,
@@ -60,58 +60,60 @@ export class App extends React.Component {
 
     render() {
         return (
-            <div>
-                <BrowserRouter>
+            <BrowserRouter>
+                <div>
+                    <div>
+                        <div className="header">
+                            <div className="logo">
+                                <Logo />
+                            </div>
+                            <div className="logout">
+                                <h3>
+                                    <a href="/logout">Log out</a>
+                                </h3>
+                            </div>
+                            <div className="avatar">
+                                <Avatar
+                                    first={this.state.first}
+                                    last={this.state.last}
+                                    avatarurl={this.state.avatarurl}
+                                    showModal={this.showModal}
+                                />
+                            </div>
+                        </div>
+                        <div>
+                            {this.state.uploaderIsVisible && (
+                                <Uploader
+                                    setAvatarUrl={this.setAvatarUrl}
+                                    hideModal={this.hideModal}
+                                />
+                            )}
+                        </div>
+                    </div>
                     <div>
                         <Route
                             exact
                             path="/"
                             render={() => (
                                 <div>
-                                    <div className="header">
-                                        <div className="logo">
-                                            <Logo />
-                                        </div>
-                                        <div className="logout">
-                                            <h3>
-                                                <a href="/logout">Log out</a>
-                                            </h3>
-                                        </div>
-                                        <div className="avatar">
-                                            <Avatar
-                                                first={this.state.first}
-                                                last={this.state.last}
-                                                avatarurl={this.state.avatarurl}
-                                                showModal={this.showModal}
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <Profile
-                                            id={this.state.id}
-                                            first={this.state.first}
-                                            last={this.state.last}
-                                            avatarurl={this.state.avatarurl}
-                                            showModal={this.showModal}
-                                            bio={this.state.bio}
-                                            setBio={this.setBio}
-                                        />
-                                    </div>
+                                    <Profile
+                                        id={this.state.id}
+                                        first={this.state.first}
+                                        last={this.state.last}
+                                        avatarurl={this.state.avatarurl}
+                                        showModal={this.showModal}
+                                        bio={this.state.bio}
+                                        setBio={this.setBio}
+                                    />
                                 </div>
                             )}
                         />
                     </div>
-                </BrowserRouter>
-                <div>
-                    {this.state.uploaderIsVisible && (
-                        <Uploader
-                            setAvatarUrl={this.setAvatarUrl}
-                            hideModal={this.hideModal}
-                        />
-                    )}
+                    <div>
+                        <Route path="/user/:id" component={OtherProfile} />
+                    </div>
                 </div>
-            </div>
+            </BrowserRouter>
         );
     }
 }

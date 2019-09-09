@@ -162,7 +162,24 @@ app.get("/welcome", (req, res) => {
     res.sendFile(__dirname + "/index.html");
 });
 
-app.get("/user", (req, res) => {
+app.get("/api/user/:id", (req, res) => {
+    let id = req.params.id;
+    db.getUser(id)
+        .then(data => {
+            // console.log(data.rows[0]);
+            res.json({
+                first: data.rows[0].first,
+                last: data.rows[0].last,
+                avatarurl: data.rows[0].avatarurl,
+                bio: data.rows[0].bio
+            });
+        })
+        .catch(err => {
+            console.log("error when getting user data: ", err);
+        });
+});
+
+app.get("/api/myuser", (req, res) => {
     db.getUser(req.session.id)
         .then(data => {
             // console.log(data.rows[0]);

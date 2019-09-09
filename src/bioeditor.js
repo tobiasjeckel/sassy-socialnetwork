@@ -13,7 +13,7 @@ export class BioEditor extends React.Component {
         this.hideEdit = this.hideEdit.bind(this);
     }
     componentDidMount() {
-        console.log("BioEditor mounted");
+        // console.log("BioEditor mounted");
         // console.log(this.state);
     }
     editMode(e) {
