@@ -164,6 +164,7 @@ app.get("/welcome", (req, res) => {
 
 app.get("/api/user/:id", (req, res) => {
     let id = req.params.id;
+    let myId = req.session.id;
     db.getUser(id)
         .then(data => {
             // console.log(data.rows[0]);
@@ -171,11 +172,14 @@ app.get("/api/user/:id", (req, res) => {
                 first: data.rows[0].first,
                 last: data.rows[0].last,
                 avatarurl: data.rows[0].avatarurl,
-                bio: data.rows[0].bio
+                bio: data.rows[0].bio,
+                id: data.rows[0].id,
+                myId: myId
             });
         })
         .catch(err => {
             console.log("error when getting user data: ", err);
+            res.json({ message: "error" });
         });
 });
 

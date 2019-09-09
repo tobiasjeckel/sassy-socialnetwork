@@ -27,7 +27,7 @@ exports.getHash = function(email) {
 
 exports.getUser = function(id) {
     return db.query(
-        `SELECT first, last, avatarurl, bio
+        `SELECT first, last, avatarurl, bio, id
         FROM users
         WHERE users.id = $1
         `,

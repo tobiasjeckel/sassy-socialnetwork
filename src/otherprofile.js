@@ -21,15 +21,18 @@ export class OtherProfile extends React.Component {
 
     getOtherUser() {
         let otherUser = this.props.match.params.id;
-        console.log("/api/user/" + otherUser);
         axios.get("/api/user/" + otherUser).then(res => {
             console.log("getting a response yeah: ", res);
-            this.setState({
-                first: res.data.first,
-                last: res.data.last,
-                avatarurl: res.data.avatarurl,
-                bio: res.data.bio
-            });
+            if (res.data.message === "error" || res.data.id === res.data.myId) {
+                this.props.history.push("/");
+            } else {
+                this.setState({
+                    first: res.data.first,
+                    last: res.data.last,
+                    avatarurl: res.data.avatarurl,
+                    bio: res.data.bio
+                });
+            }
         });
     }
 
@@ -38,7 +41,7 @@ export class OtherProfile extends React.Component {
         return (
             <div>
                 <h1>
-                    Other user {this.state.first} {this.state.last}
+                    Profile of {this.state.first} {this.state.last}
                 </h1>
                 <br />
                 <p>{this.state.bio}</p>
