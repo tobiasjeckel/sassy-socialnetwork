@@ -16,7 +16,7 @@ export class OtherProfile extends React.Component {
         let otherUser = this.props.match.params.id;
         axios.get("/api/user/" + otherUser).then(res => {
             if (res.data.message === "error" || res.data.id === res.data.myId) {
-                this.props.history.push("/");
+                this.props.history.replace("/");
             } else {
                 this.setState({
                     first: res.data.first,

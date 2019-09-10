@@ -5,7 +5,7 @@ import Uploader from "./uploader";
 import Logo from "./logo";
 import Profile from "./profile";
 import { OtherProfile } from "./otherprofile";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route, Link } from "react-router-dom";
 import FindPeople from "./findpeople";
 
 export class App extends React.Component {
@@ -71,6 +71,11 @@ export class App extends React.Component {
                             <div className="logout">
                                 <h3>
                                     <a href="/logout">Log out</a>
+                                </h3>
+                            </div>
+                            <div>
+                                <h3>
+                                    <Link to={`/users`}>Find new Friends</Link>
                                 </h3>
                             </div>
                             <div>
