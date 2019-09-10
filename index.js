@@ -199,6 +199,18 @@ app.get("/api/myuser", (req, res) => {
         });
 });
 
+app.get("/api/users/", (req, res) => {
+    let input = req.query.q;
+    // console.log("querystring is: ", input);
+    db.getUsers(input)
+        .then(data => {
+            res.json(data.rows);
+        })
+        .catch(err => {
+            console.log("error when getting list of users: ", err);
+        });
+});
+
 app.get("*", (req, res) => {
     if (req.session.id) {
         res.sendFile(__dirname + "/index.html");

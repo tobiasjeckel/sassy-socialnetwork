@@ -35,6 +35,18 @@ exports.getUser = function(id) {
     );
 };
 
+exports.getUsers = function(query) {
+    return db.query(
+        `SELECT first, last, avatarurl, id
+        FROM users
+        WHERE first ILIKE $1
+        ORDER BY first
+        LIMIT 4
+        `,
+        [query + "%"]
+    );
+};
+
 exports.editBio = function(id, bio) {
     return db.query(
         `UPDATE users

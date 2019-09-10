@@ -6,6 +6,7 @@ import Logo from "./logo";
 import Profile from "./profile";
 import { OtherProfile } from "./otherprofile";
 import { BrowserRouter, Route } from "react-router-dom";
+import FindPeople from "./findpeople";
 
 export class App extends React.Component {
     constructor() {
@@ -111,6 +112,9 @@ export class App extends React.Component {
                     </div>
                     <div>
                         <Route path="/user/:id" component={OtherProfile} />
+                    </div>
+                    <div>
+                        <Route exact path="/user" component={FindPeople} />
                     </div>
                 </div>
             </BrowserRouter>
