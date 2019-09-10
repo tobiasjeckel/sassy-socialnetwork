@@ -35,7 +35,7 @@ exports.getUser = function(id) {
     );
 };
 
-exports.getUsers = function(query) {
+exports.getUsers = function(input) {
     return db.query(
         `SELECT first, last, avatarurl, id
         FROM users
@@ -43,7 +43,17 @@ exports.getUsers = function(query) {
         ORDER BY first
         LIMIT 4
         `,
-        [query + "%"]
+        [input + "%"]
+    );
+};
+
+exports.getNewUsers = function() {
+    return db.query(
+        `SELECT first, last, avatarurl, id
+        FROM users
+        ORDER BY id DESC
+        LIMIT 4
+        `
     );
 };
 

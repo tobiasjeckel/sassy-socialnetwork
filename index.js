@@ -211,6 +211,16 @@ app.get("/api/users/", (req, res) => {
         });
 });
 
+app.get("/api/newusers", (req, res) => {
+    db.getNewUsers()
+        .then(data => {
+            res.json(data.rows);
+        })
+        .catch(err => {
+            console.log("error when getting list of NEW users: ", err);
+        });
+});
+
 app.get("*", (req, res) => {
     if (req.session.id) {
         res.sendFile(__dirname + "/index.html");

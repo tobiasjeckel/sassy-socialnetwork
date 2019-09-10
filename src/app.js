@@ -114,7 +114,7 @@ export class App extends React.Component {
                         <Route path="/user/:id" component={OtherProfile} />
                     </div>
                     <div>
-                        <Route exact path="/user" component={FindPeople} />
+                        <Route exact path="/users" component={FindPeople} />
                     </div>
                 </div>
             </BrowserRouter>
