@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "./axios";
+import { Link } from "react-router-dom";
 
 export default function FindPeople() {
     const [input, setInput] = useState();
@@ -9,9 +10,6 @@ export default function FindPeople() {
     const handleInputChange = e => {
         setInput(e.target.value);
     };
-
-    console.log("search response is: ", users);
-    console.log("newUser response is: ", newUsers);
 
     //display users that are searched for
     useEffect(() => {
@@ -48,7 +46,7 @@ export default function FindPeople() {
         return () => {
             ignore = true;
         };
-    }, []);
+    }, [users]);
 
     return (
         <div>
@@ -61,12 +59,20 @@ export default function FindPeople() {
             />
             <br />
             <div>
+                <br />
                 {users &&
                     users.map(user => (
                         <div key={user.id}>
-                            <img src={user.avatarurl} />
+                            <div className="largeAvatar">
+                                <Link to={`/user/${user.id}`}>
+                                    <img
+                                        src={user.avatarurl}
+                                        alt={`${user.first} ${user.last}`}
+                                    />
+                                </Link>
+                            </div>
                             <p>
-                                {user.first} {user.last}{" "}
+                                {user.first} {user.last}
                             </p>
                         </div>
                     ))}
@@ -77,7 +83,14 @@ export default function FindPeople() {
                         <h2>Check out the new users on MySpace</h2>
                         {newUsers.map(user => (
                             <div key={user.id}>
-                                <img src={user.avatarurl} />
+                                <div className="largeAvatar">
+                                    <Link to={`/user/${user.id}`}>
+                                        <img
+                                            src={user.avatarurl}
+                                            alt={`${user.first} ${user.last}`}
+                                        />
+                                    </Link>
+                                </div>
                                 <p>
                                     {user.first} {user.last}
                                 </p>

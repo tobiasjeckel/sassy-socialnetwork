@@ -39,7 +39,7 @@ exports.getUsers = function(input) {
     return db.query(
         `SELECT first, last, avatarurl, id
         FROM users
-        WHERE first ILIKE $1
+        WHERE first || ' ' || last ILIKE $1
         ORDER BY first
         LIMIT 4
         `,
