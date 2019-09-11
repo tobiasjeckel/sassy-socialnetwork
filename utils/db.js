@@ -78,3 +78,24 @@ exports.uploadAvatar = function(id, avatarurl) {
         [id, avatarurl]
     );
 };
+
+exports.getFriendStatus = function(viewerId, ownerId) {
+    return db.query(
+        `SELECT receiver_id, sender_id, accepted
+        FROM friendships
+        WHERE (receiver_id =$1 AND sender_id=$2)
+        OR (receiver_id=$2 AND sender_id=$1)
+        `,
+        [viewerId, ownerId]
+    );
+};
+
+exports.sendFriendRequest = function(viewerId, ownerId) {
+    return db.query(
+        `INSERT INTO friendships (receiver_id, sender_id)
+        VALUES ($1, $2)
+        RETURNING sender_id, receiver_id, accepted
+        `,
+        [ownerId, viewerId]
+    );
+};

@@ -10,3 +10,18 @@ CREATE TABLE users (
     bio VARCHAR,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+
+-- create a new TABLE
+
+-- column: is there a relationship ?
+-- are they friends?
+-- who sent that friend request?
+-- profileviewer is sender - cancel friend request ? profileviewer is receiver- button should say accept ?
+
+CREATE table friendships (
+    id SERIAL PRIMARY KEY,
+    receiver_id INT NOT NULL REFERENCES users(id),
+    sender_id INT NOT NULL REFERENCES users(id),
+    accepted BOOLEAN DEFAULT FALSE
+);

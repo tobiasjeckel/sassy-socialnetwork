@@ -221,6 +221,40 @@ app.get("/api/newusers", (req, res) => {
         });
 });
 
+app.get("/api/friendstatus/:id", (req, res) => {
+    let viewerId = req.session.id;
+    let ownerId = req.params.id;
+    console.log(`*** viewerId: ${viewerId} * ownerId: ${ownerId}`);
+    // res.json({
+    //     message: `request was made with viewerId: ${viewerId} * ownerId: ${ownerId}`
+    // });
+
+    db.getFriendStatus(viewerId, ownerId)
+        .then(data => {
+            console.log("response is: ", data.rows[0]);
+            // let myIdObj = { myId: viewerId };
+            res.json({ ...data.rows[0], myId: viewerId });
+        })
+        .catch(err => {
+            console.log("error when getting friend statuses: ", err);
+        });
+});
+
+app.post("/api/sendfriendrequest/:id", (req, res) => {
+    let viewerId = req.session.id;
+    let ownerId = req.params.id;
+    console.log(`*** viewerId: ${viewerId} * ownerId: ${ownerId}`);
+
+    db.sendFriendRequest(viewerId, ownerId)
+        .then(data => {
+            console.log("response is: ", data.rows[0]);
+            res.json(data.rows[0]);
+        })
+        .catch(err => {
+            console.log("error when adding friend", err);
+        });
+});
+
 app.get("*", (req, res) => {
     if (req.session.id) {
         res.sendFile(__dirname + "/index.html");
