@@ -5,7 +5,7 @@ export function FriendButton(props) {
     let otherUser = props.match;
 
     const [buttonType, setButtonType] = useState({});
-    const onClick = useHandleSubmit(buttonType, otherUser);
+    // const onClick = useHandleSubmit(buttonType, otherUser);
 
     useEffect(() => {
         console.log("id of profile that is being viewed: ", otherUser);
@@ -45,7 +45,88 @@ export function FriendButton(props) {
             .catch(err => {
                 console.log(err);
             });
-    }, []); // check back later for infinite loop behaviour
+    }, []);
+
+    const onClick = () => {
+        console.log(
+            "friend button clicked with value and user id ",
+            buttonType.value,
+            otherUser
+        );
+
+        //send friend request route
+        if (buttonType.value == "sendfriendrequest") {
+            axios
+                .post(`/api/sendfriendrequest/${otherUser}`)
+                .then(res => {
+                    console.log(
+                        "friend request sent for receiver_id: ",
+                        res.data.receiver_id
+                    );
+                    setButtonType({
+                        text: "Cancel friend request",
+                        value: "cancelfriendrequest"
+                    });
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
+
+        //cancel friend request route
+        if (buttonType.value == "cancelfriendrequest") {
+            axios
+                .post(`/api/cancelfriendrequest/${otherUser}`)
+                .then(res => {
+                    console.log(
+                        "friend request deleted for receiver_id: ",
+                        res.data.receiver_id
+                    );
+                    setButtonType({
+                        text: "Send friend request",
+                        value: "sendfriendrequest"
+                    });
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
+
+        //accept friend request route
+        if (buttonType.value == "acceptfriendrequest") {
+            axios
+                .post(`/api/acceptfriendrequest/${otherUser}`)
+                .then(res => {
+                    console.log(
+                        "accepted friend request of user: ",
+                        res.data.sender_id
+                    );
+                    setButtonType({
+                        text: "Unfriend",
+                        value: "unfriend"
+                    });
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
+
+        //unfriend route
+        if (buttonType.value == "unfriend") {
+            axios
+                .post(`/api/unfriend/${otherUser}`)
+                .then(res => {
+                    console.log("unfriended user: ", res);
+                    setButtonType({
+                        text: "Send friend request",
+                        value: "sendfriendrequest"
+                    });
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
+    };
 
     return (
         <div>
@@ -56,30 +137,30 @@ export function FriendButton(props) {
     );
 }
 
-function useHandleSubmit(buttonType, otherUser) {
-    const [setButtonType] = useState({});
-
-    const onClick = () => {
-        console.log(
-            "friend button clicked with value and user id ",
-            buttonType.value,
-            otherUser
-        );
-
-        if (buttonType.value == "sendfriendrequest") {
-            axios
-                .post(`/api/sendfriendrequest/${otherUser}`)
-                .then(res => {
-                    console.log(res);
-                    setButtonType("cancelfriendrequest");
-                })
-                .catch(err => {
-                    console.log(err);
-                });
-        }
-
-        //add more routes here
-    };
-
-    return onClick;
-}
+// function useHandleSubmit(buttonType, otherUser) {
+//     const [setButtonType] = useState({});
+//
+//     const onClick = () => {
+//         console.log(
+//             "friend button clicked with value and user id ",
+//             buttonType.value,
+//             otherUser
+//         );
+//
+//         if (buttonType.value == "sendfriendrequest") {
+//             axios
+//                 .post(`/api/sendfriendrequest/${otherUser}`)
+//                 .then(res => {
+//                     console.log(res);
+//                     setButtonType("cancelfriendrequest");
+//                 })
+//                 .catch(err => {
+//                     console.log(err);
+//                 });
+//         }
+//
+//         //add more routes here
+//     };
+//
+//     return onClick;
+// }

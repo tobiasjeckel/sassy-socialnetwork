@@ -99,3 +99,35 @@ exports.sendFriendRequest = function(viewerId, ownerId) {
         [ownerId, viewerId]
     );
 };
+
+exports.cancelFriendRequest = function(viewerId, ownerId) {
+    return db.query(
+        `DELETE FROM friendships
+        WHERE (receiver_id =$1 AND sender_id=$2)
+        OR (receiver_id=$2 AND sender_id=$1)
+        RETURNING receiver_id
+        `,
+        [ownerId, viewerId]
+    );
+};
+
+exports.acceptFriendRequest = function(viewerId, ownerId) {
+    return db.query(
+        `UPDATE friendships
+        SET accepted=TRUE
+        WHERE (sender_id=$1 AND receiver_id=$2)
+        RETURNING sender_id
+        `,
+        [ownerId, viewerId]
+    );
+};
+
+// exports.unfriend = function(viewerId, ownerId) {
+//     return db.query(
+//         `DELETE FROM friendships
+//         WHERE ()
+//         `,
+//         [ownerId, viewerId]
+//
+//     )
+// }

@@ -255,6 +255,51 @@ app.post("/api/sendfriendrequest/:id", (req, res) => {
         });
 });
 
+app.post("/api/cancelfriendrequest/:id", (req, res) => {
+    let viewerId = req.session.id;
+    let ownerId = req.params.id;
+    console.log(`*** viewerId: ${viewerId} * ownerId: ${ownerId}`);
+
+    db.cancelFriendRequest(viewerId, ownerId)
+        .then(data => {
+            console.log("receiver_id response is: ", data.rows[0]);
+            res.json(data.rows[0]);
+        })
+        .catch(err => {
+            console.log("error when adding friend", err);
+        });
+});
+
+app.post("/api/acceptfriendrequest/:id", (req, res) => {
+    let viewerId = req.session.id;
+    let ownerId = req.params.id;
+    console.log(`*** viewerId: ${viewerId} * ownerId: ${ownerId}`);
+
+    db.acceptFriendRequest(viewerId, ownerId)
+        .then(data => {
+            console.log("res is: ", data.rows[0]);
+            res.json(data.rows[0]);
+        })
+        .catch(err => {
+            console.log("error when accepting friend", err);
+        });
+});
+
+app.post("/api/unfriend/:id", (req, res) => {
+    let viewerId = req.session.id;
+    let ownerId = req.params.id;
+    console.log(`*** viewerId: ${viewerId} * ownerId: ${ownerId}`);
+
+    db.cancelFriendRequest(viewerId, ownerId)
+        .then(data => {
+            console.log("res is: ", data.rows[0]);
+            res.json(data.rows[0]);
+        })
+        .catch(err => {
+            console.log("error when unfriending: ", err);
+        });
+});
+
 app.get("*", (req, res) => {
     if (req.session.id) {
         res.sendFile(__dirname + "/index.html");
