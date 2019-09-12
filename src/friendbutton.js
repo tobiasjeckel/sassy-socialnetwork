@@ -12,7 +12,7 @@ export function FriendButton(props) {
         axios
             .get(`/api/friendstatus/${otherUser}`)
             .then(res => {
-                console.log(res);
+                // console.log(res);
                 if (!res.data.receiver_id) {
                     setButtonType({
                         text: "Send friend request",
