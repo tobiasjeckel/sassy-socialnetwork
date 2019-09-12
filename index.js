@@ -69,7 +69,6 @@ if (process.env.NODE_ENV != "production") {
 }
 
 app.post("/registration", (req, res) => {
-    console.log("this is the body of reg", req.body);
     bc.hash(req.body.password)
         .then(hash => {
             db.addUser(req.body.first, req.body.last, req.body.email, hash)
@@ -201,7 +200,6 @@ app.get("/api/myuser", (req, res) => {
 
 app.get("/api/users/", (req, res) => {
     let input = req.query.q;
-    // console.log("querystring is: ", input);
     db.getUsers(input)
         .then(data => {
             res.json(data.rows);
@@ -224,15 +222,9 @@ app.get("/api/newusers", (req, res) => {
 app.get("/api/friendstatus/:id", (req, res) => {
     let viewerId = req.session.id;
     let ownerId = req.params.id;
-    console.log(`*** viewerId: ${viewerId} * ownerId: ${ownerId}`);
-    // res.json({
-    //     message: `request was made with viewerId: ${viewerId} * ownerId: ${ownerId}`
-    // });
 
     db.getFriendStatus(viewerId, ownerId)
         .then(data => {
-            console.log("response is: ", data.rows[0]);
-            // let myIdObj = { myId: viewerId };
             res.json({ ...data.rows[0], myId: viewerId });
         })
         .catch(err => {
@@ -243,11 +235,9 @@ app.get("/api/friendstatus/:id", (req, res) => {
 app.post("/api/sendfriendrequest/:id", (req, res) => {
     let viewerId = req.session.id;
     let ownerId = req.params.id;
-    console.log(`*** viewerId: ${viewerId} * ownerId: ${ownerId}`);
 
     db.sendFriendRequest(viewerId, ownerId)
         .then(data => {
-            console.log("response is: ", data.rows[0]);
             res.json(data.rows[0]);
         })
         .catch(err => {
@@ -258,11 +248,9 @@ app.post("/api/sendfriendrequest/:id", (req, res) => {
 app.post("/api/cancelfriendrequest/:id", (req, res) => {
     let viewerId = req.session.id;
     let ownerId = req.params.id;
-    console.log(`*** viewerId: ${viewerId} * ownerId: ${ownerId}`);
 
     db.cancelFriendRequest(viewerId, ownerId)
         .then(data => {
-            console.log("receiver_id response is: ", data.rows[0]);
             res.json(data.rows[0]);
         })
         .catch(err => {
@@ -273,11 +261,9 @@ app.post("/api/cancelfriendrequest/:id", (req, res) => {
 app.post("/api/acceptfriendrequest/:id", (req, res) => {
     let viewerId = req.session.id;
     let ownerId = req.params.id;
-    console.log(`*** viewerId: ${viewerId} * ownerId: ${ownerId}`);
 
     db.acceptFriendRequest(viewerId, ownerId)
         .then(data => {
-            console.log("res is: ", data.rows[0]);
             res.json(data.rows[0]);
         })
         .catch(err => {
@@ -288,11 +274,9 @@ app.post("/api/acceptfriendrequest/:id", (req, res) => {
 app.post("/api/unfriend/:id", (req, res) => {
     let viewerId = req.session.id;
     let ownerId = req.params.id;
-    console.log(`*** viewerId: ${viewerId} * ownerId: ${ownerId}`);
 
     db.cancelFriendRequest(viewerId, ownerId)
         .then(data => {
-            console.log("res is: ", data.rows[0]);
             res.json(data.rows[0]);
         })
         .catch(err => {

@@ -5,6 +5,8 @@ export function FriendButton(props) {
     let otherUser = props.match;
 
     const [buttonType, setButtonType] = useState({});
+    const [message, setMessage] = useState("");
+    const [disabled, setDisabled] = useState(false);
     // const onClick = useHandleSubmit(buttonType, otherUser);
 
     useEffect(() => {
@@ -48,11 +50,15 @@ export function FriendButton(props) {
     }, []);
 
     const onClick = () => {
-        console.log(
-            "friend button clicked with value and user id ",
-            buttonType.value,
-            otherUser
-        );
+        // console.log(
+        //     "friend button clicked with value and user id ",
+        //     buttonType.value,
+        //     otherUser
+        // );
+        setDisabled(true);
+        setTimeout(function() {
+            setDisabled(false);
+        }, 2000);
 
         //send friend request route
         if (buttonType.value == "sendfriendrequest") {
@@ -63,10 +69,13 @@ export function FriendButton(props) {
                         "friend request sent for receiver_id: ",
                         res.data.receiver_id
                     );
-                    setButtonType({
-                        text: "Cancel friend request",
-                        value: "cancelfriendrequest"
-                    });
+                    setTimeout(function() {
+                        setButtonType({
+                            text: "Cancel friend request",
+                            value: "cancelfriendrequest"
+                        });
+                    }, 2000);
+                    setMessage("Friend request has been sent!");
                 })
                 .catch(err => {
                     console.log(err);
@@ -82,10 +91,14 @@ export function FriendButton(props) {
                         "friend request deleted for receiver_id: ",
                         res.data.receiver_id
                     );
-                    setButtonType({
-                        text: "Send friend request",
-                        value: "sendfriendrequest"
-                    });
+                    setTimeout(function() {
+                        setButtonType({
+                            text: "Send friend request",
+                            value: "sendfriendrequest"
+                        });
+                    }, 2000);
+
+                    setMessage("Friend request has been cancelled!");
                 })
                 .catch(err => {
                     console.log(err);
@@ -101,10 +114,17 @@ export function FriendButton(props) {
                         "accepted friend request of user: ",
                         res.data.sender_id
                     );
-                    setButtonType({
-                        text: "Unfriend",
-                        value: "unfriend"
-                    });
+
+                    setTimeout(function() {
+                        setButtonType({
+                            text: "Unfriend",
+                            value: "unfriend"
+                        });
+                    }, 2000);
+
+                    setMessage(
+                        "Friend request has been accepted! You are now friends!"
+                    );
                 })
                 .catch(err => {
                     console.log(err);
@@ -117,10 +137,17 @@ export function FriendButton(props) {
                 .post(`/api/unfriend/${otherUser}`)
                 .then(res => {
                     console.log("unfriended user: ", res);
-                    setButtonType({
-                        text: "Send friend request",
-                        value: "sendfriendrequest"
-                    });
+
+                    setTimeout(function() {
+                        setButtonType({
+                            text: "Send friend request",
+                            value: "sendfriendrequest"
+                        });
+                    }, 2000);
+
+                    setMessage(
+                        "Person has been unfriended! You are no longer friends!"
+                    );
                 })
                 .catch(err => {
                     console.log(err);
@@ -130,9 +157,11 @@ export function FriendButton(props) {
 
     return (
         <div>
-            <button onClick={onClick} name="friend">
+            <button onClick={onClick} name="friend" disabled={disabled}>
                 {buttonType.text}
             </button>
+            <br />
+            <p> {message} </p>
         </div>
     );
 }
