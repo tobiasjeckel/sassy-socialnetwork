@@ -3,16 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getFriendsWannabes, acceptFriendRequest, unfriend } from "./actions";
 
 export default function Friends() {
-    const friendsWannabes = useSelector(state => {
-        // console.log("redux state: ", state);
-        return state.friendsWannabes;
-    });
-    // const realfriends =
-    //     friendsWannabes &&
-    //     friendsWannabes.filter(friend => friend.accepted == true);
-    //
-    // realfriends && console.log(realfriends);
-
     const friends = useSelector(state => {
         return (
             state.friendsWannabes &&
@@ -20,7 +10,7 @@ export default function Friends() {
         );
     });
 
-    friends && console.log(friends);
+    friends && console.log("friends: ", friends);
 
     const wannabes = useSelector(state => {
         return (
@@ -29,13 +19,7 @@ export default function Friends() {
         );
     });
 
-    wannabes && console.log(wannabes);
-
-    // friendsWannabes &&
-    //     console.log(
-    //         "friends and wannabes back in friends.js is ",
-    //         friendsWannabes
-    //     );
+    wannabes && console.log("wannabes: ", wannabes);
 
     const dispatch = useDispatch();
 
@@ -46,12 +30,12 @@ export default function Friends() {
     return (
         <div>
             <h1>My Friends </h1>
-            <h2>These people are wannabes and want to be your friends</h2>
+            <h3>These people are wannabes and want to be your friends</h3>
             <div>
                 {wannabes &&
                     wannabes.map(wannabe => {
                         return (
-                            <div key={wannabe.id}>
+                            <div className="friendcard" key={wannabe.id}>
                                 <img
                                     src={wannabe.avatarurl}
                                     alt={`${wannabe.first} ${wannabe.last}`}
@@ -59,7 +43,16 @@ export default function Friends() {
                                 <p>
                                     {wannabe.first} {wannabe.last}
                                 </p>
-                                <button>Accept friend request </button>
+                                <button
+                                    value={wannabe.id}
+                                    onClick={e =>
+                                        dispatch(
+                                            acceptFriendRequest(e.target.value)
+                                        )
+                                    }
+                                >
+                                    Accept friend request{" "}
+                                </button>
                             </div>
                         );
                     })}
@@ -67,12 +60,12 @@ export default function Friends() {
 
             <br />
 
-            <h2>These people are currently your friends</h2>
+            <h3>These people are currently your friends</h3>
             <div>
                 {friends &&
                     friends.map(friend => {
                         return (
-                            <div key={friend.id}>
+                            <div className="friendcard" key={friend.id}>
                                 <img
                                     src={friend.avatarurl}
                                     alt={`${friend.first} ${friend.last}`}
@@ -80,7 +73,14 @@ export default function Friends() {
                                 <p>
                                     {friend.first} {friend.last}
                                 </p>
-                                <button>Terminate from friends</button>
+                                <button
+                                    value={friend.id}
+                                    onClick={e =>
+                                        dispatch(unfriend(e.target.value))
+                                    }
+                                >
+                                    Terminate from friends
+                                </button>
                             </div>
                         );
                     })}

@@ -20,22 +20,25 @@ export function getFriendsWannabes() {
     });
 }
 
-export function acceptFriendRequest() {
-    return axios.get("/api/acceptfriendrequest/:id").then(({ data }) => {
-        //todo: add props to id
-        return {
-            type: "ACCEPT_FRIEND_REQUEST",
-            id: data //id of the user whose friendship was accepted
-        };
-    });
+export function acceptFriendRequest(otherUser) {
+    console.log("accept friend request for user with id: ", otherUser);
+    return axios
+        .post(`/api/acceptfriendrequest/${otherUser}`)
+        .then(({ data }) => {
+            return {
+                type: "ACCEPT_FRIEND_REQUEST",
+                id: data.sender_id //id of the user whose friendship was accepted
+            };
+        });
 }
 
-export function unfriend() {
-    return axios.get("api/unfriend:id").then(({ data }) => {
-        //todo: add props to id
+export function unfriend(otherUser) {
+    console.log("terminate friendship for user with id: ", otherUser);
+
+    return axios.post(`api/unfriend/${otherUser}`).then(() => {
         return {
             type: "UNFRIEND",
-            id: data //id of the user whose friendship was ended
+            id: otherUser //id of the user whose friendship was ended
         };
     });
 }

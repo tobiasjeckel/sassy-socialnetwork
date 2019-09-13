@@ -40,3 +40,8 @@ body {
     width: 240px;
     height: 240px;
 }
+
+.friendcard {
+    padding: 10px;
+    border-top: 1px solid black;
+}
