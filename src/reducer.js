@@ -23,7 +23,6 @@ export default function reducer(state = {}, action) {
                 }
             })
         };
-        //do so the clone should have all the properties of the old state except one of the objects in the friendsWannabes array should have their accepted property set to true
     }
 
     if (action.type === "UNFRIEND") {
@@ -33,8 +32,6 @@ export default function reducer(state = {}, action) {
                 return fw.id != action.id;
             })
         };
-        // should clone the global state, and the clone should have all the properties of the old state except the user whose friendship was ended should be removed from the friendsWannabes array.
     }
-    // console.log("the current state in redux is: ", state); //this part should also be in dev tools
     return state;
 }

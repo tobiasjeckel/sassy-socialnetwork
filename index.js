@@ -264,7 +264,6 @@ app.post("/api/acceptfriendrequest/:id", (req, res) => {
 
     db.acceptFriendRequest(viewerId, ownerId)
         .then(data => {
-            console.log("accepted friend request of user: ", data.rows[0]);
             res.json(data.rows[0]);
         })
         .catch(err => {
@@ -290,7 +289,6 @@ app.get("/api/friendswannabes", (req, res) => {
 
     db.getFriendsWannabes(viewerId)
         .then(data => {
-            console.log(data.rows);
             res.json(data.rows);
         })
         .catch(err => {

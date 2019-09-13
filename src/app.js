@@ -76,7 +76,12 @@ export class App extends React.Component {
                             </div>
                             <div>
                                 <h3>
-                                    <Link to={`/users`}>Find new Friends</Link>
+                                    <Link to={`/users`}>Meet new people</Link>
+                                </h3>
+                            </div>
+                            <div>
+                                <h3>
+                                    <Link to={`/friends`}>My Friends</Link>
                                 </h3>
                             </div>
                             <div>
