@@ -284,6 +284,11 @@ app.post("/api/unfriend/:id", (req, res) => {
         });
 });
 
+app.get("/api/friends", (req, res) => {
+    console.log("friends is running");
+    res.json([{ name: "tobi" }, { name: "ines" }, { name: "robby" }]);
+});
+
 app.get("*", (req, res) => {
     if (req.session.id) {
         res.sendFile(__dirname + "/index.html");
