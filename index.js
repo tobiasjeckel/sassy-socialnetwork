@@ -284,9 +284,17 @@ app.post("/api/unfriend/:id", (req, res) => {
         });
 });
 
-app.get("/api/friends", (req, res) => {
-    console.log("friends is running");
-    res.json([{ name: "tobi" }, { name: "ines" }, { name: "robby" }]);
+app.get("/api/friendswannabes", (req, res) => {
+    let viewerId = req.session.id;
+
+    db.getFriendsWannabes(viewerId)
+        .then(data => {
+            console.log(data.rows);
+            res.json(data.rows);
+        })
+        .catch(err => {
+            console.log("error when getting friends and wannabes: ", err);
+        });
 });
 
 app.get("*", (req, res) => {

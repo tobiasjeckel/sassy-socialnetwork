@@ -122,12 +122,15 @@ exports.acceptFriendRequest = function(viewerId, ownerId) {
     );
 };
 
-// exports.unfriend = function(viewerId, ownerId) {
-//     return db.query(
-//         `DELETE FROM friendships
-//         WHERE ()
-//         `,
-//         [ownerId, viewerId]
-//
-//     )
-// }
+exports.getFriendsWannabes = function(viewerId) {
+    return db.query(
+        `SELECT users.id, first, last, avatarurl, accepted
+        FROM friendships
+        JOIN users
+        ON (accepted = false AND receiver_id = $1 AND sender_id = users.id)
+        OR (accepted = true AND receiver_id = $1 AND sender_id = users.id)
+        OR (accepted = true AND sender_id = $1 AND receiver_id = users.id)
+        `,
+        [viewerId]
+    );
+};
