@@ -5,6 +5,10 @@ const bc = require("./utils/bc");
 const db = require("./utils/db");
 const cookieSession = require("cookie-session");
 const csurf = require("csurf");
+
+const server = require("http").Server(app);
+const io = require("socket.io")(server, { origins: "localhost:8080" }); //space separated list which allows socket.io connections -change this when deploying to Heroku
+
 //file upload
 const multer = require("multer");
 const uidSafe = require("uid-safe");
@@ -304,6 +308,14 @@ app.get("*", (req, res) => {
     }
 });
 
-app.listen(8080, () => {
+//changed from app.listen to server.listen
+server.listen(8080, () => {
     console.log("I'm listeningggg.");
+});
+
+io.on("connection", socket => {
+    console.log(`socket with id ${socket.id} just connected`);
+    socket.on("disconnect", () => {
+        console.log("socket just disconnected");
+    });
 });
