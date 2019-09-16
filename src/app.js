@@ -69,20 +69,8 @@ export class App extends React.Component {
                             <div className="logo">
                                 <Logo />
                             </div>
-                            <div className="logout">
-                                <h3>
-                                    <a href="/logout">Log out</a>
-                                </h3>
-                            </div>
-                            <div>
-                                <h3>
-                                    <Link to={`/users`}>Meet new people</Link>
-                                </h3>
-                            </div>
-                            <div>
-                                <h3>
-                                    <Link to={`/friends`}>My Friends</Link>
-                                </h3>
+                            <div className="search">
+                                <input type="search" /> <button>Search</button>
                             </div>
                             <div>
                                 <Avatar
@@ -92,6 +80,11 @@ export class App extends React.Component {
                                     showModal={this.showModal}
                                 />
                             </div>
+                        </div>
+                        <div className="topnav">
+                            <Link to={`/users`}>Meet new people</Link> |
+                            <Link to={`/friends`}>My Friends</Link> |
+                            <a href="/logout">Log out</a>
                         </div>
                         <div>
                             {this.state.uploaderIsVisible && (

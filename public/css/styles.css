@@ -4,14 +4,38 @@
 }
 
 body {
-    background-color: lightgrey;
+    background-color: #e5e5e5;
     margin: 0;
 }
 
 .header {
     display: flex;
     justify-content: space-between;
-    background-color: lightblue;
+    background-color: #039;
+    text-decoration: none;
+}
+
+.header a {
+    text-decoration: none;
+    color: white;
+}
+
+.topnav {
+    display: flex;
+    justify-content: center;
+    background-color: #6698cb;
+    text-decoration: none;
+    padding: 2px;
+}
+
+.topnav a {
+    text-decoration: none;
+    color: white;
+}
+
+.topnav a:hover {
+    text-decoration: underline;
+    color: #039;
 }
 
 .avatar {
