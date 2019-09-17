@@ -69,3 +69,8 @@ body {
     padding: 10px;
     border-top: 1px solid black;
 }
+
+.chatmessages {
+    overflow-y: scroll;
+    height: 300px;
+}

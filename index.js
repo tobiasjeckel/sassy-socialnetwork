@@ -5,6 +5,13 @@ const bc = require("./utils/bc");
 const db = require("./utils/db");
 const cookieSession = require("cookie-session");
 const csurf = require("csurf");
+const cookieSessionMiddleware = cookieSession({
+    secret:
+        process.env.NODE_ENV == "production"
+            ? process.env.SESS_SECRET
+            : require("./secrets").sessionSecret,
+    maxAge: 1000 * 60 * 60 * 24 * 14
+});
 
 const server = require("http").Server(app);
 const io = require("socket.io")(server, { origins: "localhost:8080" }); //space separated list which allows socket.io connections -change this when deploying to Heroku
@@ -37,15 +44,11 @@ const uploader = multer({
 app.use(compression());
 app.use(express.json());
 
-app.use(
-    cookieSession({
-        secret:
-            process.env.NODE_ENV == "production"
-                ? process.env.SESS_SECRET
-                : require("./secrets").sessionSecret,
-        maxAge: 1000 * 60 * 60 * 24 * 14
-    })
-);
+app.use(cookieSessionMiddleware);
+
+io.use(function(socket, next) {
+    cookieSessionMiddleware(socket.request, socket.request.res, next);
+});
 
 app.use(csurf());
 
@@ -313,9 +316,39 @@ server.listen(8080, () => {
     console.log("I'm listeningggg.");
 });
 
-io.on("connection", socket => {
-    console.log(`socket with id ${socket.id} just connected`);
-    socket.on("disconnect", () => {
-        console.log("socket just disconnected");
+//server side socket code
+
+// io.on("connection", socket => {
+//     console.log(`socket with id ${socket.id} just connected`);
+//     socket.on("disconnect", () => {
+//         console.log("socket just disconnected");
+//     });
+// });
+
+io.on("connection", function(socket) {
+    console.log(`socket with id ${socket.id} is now connected`);
+    if (!socket.request.session.id) {
+        return socket.disconnect(true);
+    }
+
+    let id = socket.request.session.id; //get correct user id
+    socket.on("my chat message", msg => {
+        console.log("message received: ", msg);
+        io.sockets.emit("message from server", msg);
     });
+    /* ... */
 });
+
+//use moment.js to make dates pretty
+
+//make db query to get last 10 chat messages
+//.then data=>
+// io.sockets.emit("chatMessages", data.rows) //array of chat messages
+
+//Deal with new chat messages
+//socket.("new message", (msg) => {
+//i. go and get all the info about the user, i.e a db query
+//ii. add chat message to db
+//iii. create a chat message object or use the data from above query
+//iv. io.sockets.emit("new chat message")
+//})
