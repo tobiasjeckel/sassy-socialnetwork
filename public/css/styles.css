@@ -73,4 +73,15 @@ body {
 .chatmessages {
     overflow-y: scroll;
     height: 300px;
+    width: 768px;
+    background-color: white;
+}
+
+.chatmessage {
+    border-top: 1px solid black;
+}
+
+textarea {
+    width: 768px;
+    height: 100px;
 }

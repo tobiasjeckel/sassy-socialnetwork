@@ -27,4 +27,4 @@ CREATE TABLE chats (
     message VARCHAR,
     posted_date VARCHAR(500),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-)
+);

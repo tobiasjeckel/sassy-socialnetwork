@@ -9,7 +9,7 @@ import { createStore, applyMiddleware } from "redux";
 import reduxPromise from "redux-promise";
 import { composeWithDevTools } from "redux-devtools-extension";
 import reducer from "./reducer";
-import { init } from "./socket"; //gross, klein ?
+import { init } from "./socket";
 
 const store = createStore(
     reducer,
@@ -32,5 +32,3 @@ if (location.pathname == "/welcome") {
 }
 
 ReactDOM.render(elem, document.querySelector("main"));
-
-//elem = <img src="assets/under-construction.gif" />;

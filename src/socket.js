@@ -1,4 +1,4 @@
-import { chatMessages, chatMessage } from "./actions";
+import { chatMessages, chatMessage } from "./actions"; //add chatMessage
 import * as io from "socket.io-client";
 
 export let socket;
@@ -6,18 +6,16 @@ export let socket;
 export const init = store => {
     if (!socket) {
         socket = io.connect();
-        socket.on("message from server", msg => {
+        socket.on("new-message-from-server", msg => {
+            store.dispatch(chatMessage(msg));
             console.log(`
-                received msg from server. now just start redux stuff and dispatch it an action. message: ${msg}
+                received msg from server: ${msg}
                 `);
         });
-        //redux stuff
 
-        //
-        socket.on("chatMessages", msgs => store.dispatch(chatMessages(msgs)));
-
-        socket.on("chatMessage", msg => store.dispatch(chatMessage(msg)));
+        socket.on("last-ten-messages", msgs => {
+            console.log("last ten msg from server: ", msgs);
+            store.dispatch(chatMessages(msgs));
+        });
     }
 };
-
-// 2 actions and 2 reducers

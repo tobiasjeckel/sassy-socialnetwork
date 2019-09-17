@@ -134,3 +134,34 @@ exports.getFriendsWannabes = function(viewerId) {
         [viewerId]
     );
 };
+
+exports.getLastTenMessages = function() {
+    return db.query(
+        `SELECT chats.id AS messageid, sender_id, message, chats.created_at, first, last, avatarurl, users.id AS userid
+        FROM chats
+        JOIN users
+        ON (sender_id = users.id)
+        ORDER BY created_at DESC
+        LIMIT 10
+        `
+    );
+};
+
+exports.addMessage = function(senderId, message) {
+    return db.query(
+        `INSERT INTO chats (sender_id, message)
+        VALUES ($1, $2)
+        RETURNING id AS messageid, sender_id, message, created_at
+        `,
+        [senderId, message]
+    );
+};
+
+exports.getUserChatInfo = function(id) {
+    return db.query(
+        `SELECT first, last, avatarurl, id AS userid
+        FROM users
+        WHERE (id = $1)`,
+        [id]
+    );
+};

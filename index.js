@@ -318,13 +318,6 @@ server.listen(8080, () => {
 
 //server side socket code
 
-// io.on("connection", socket => {
-//     console.log(`socket with id ${socket.id} just connected`);
-//     socket.on("disconnect", () => {
-//         console.log("socket just disconnected");
-//     });
-// });
-
 io.on("connection", function(socket) {
     console.log(`socket with id ${socket.id} is now connected`);
     if (!socket.request.session.id) {
@@ -332,11 +325,45 @@ io.on("connection", function(socket) {
     }
 
     let id = socket.request.session.id; //get correct user id
-    socket.on("my chat message", msg => {
+
+    db.getLastTenMessages()
+        .then(data => {
+            console.log(data.rows);
+            io.sockets.emit("last-ten-messages", data.rows.reverse());
+        })
+        .catch(err => {
+            console.log("error when getting last ten messages: ", err);
+        });
+
+    socket.on("new-message", msg => {
         console.log("message received: ", msg);
-        io.sockets.emit("message from server", msg);
+        // io.sockets.emit("message-from-server", msg);
+        //do all the stuff here
+        let userData;
+        //TODO - fix this whole thing with async
+        db.addMessage(id, msg)
+            .then(mdata => {
+                console.log(mdata.rows[0]);
+                let messageData = mdata.rows[0];
+                db.getUserChatInfo(id)
+                    .then(udata => {
+                        userData = udata.rows[0];
+                        io.sockets.emit("new-message-from-server", [
+                            ...messageData,
+                            ...userData
+                        ]);
+                    })
+                    .catch(err => {
+                        console.log(
+                            "error when getting user data after adding message: ",
+                            err
+                        );
+                    });
+            })
+            .catch(err => {
+                console.log("err when adding message: ", err);
+            });
     });
-    /* ... */
 });
 
 //use moment.js to make dates pretty

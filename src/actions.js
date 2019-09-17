@@ -42,3 +42,18 @@ export function unfriend(otherUser) {
         };
     });
 }
+
+export function chatMessages(chatMessages) {
+    return {
+        type: "GET_LAST_TEN_MESSAGES",
+        chatMessages
+    };
+}
+
+export function chatMessage(chatMessage) {
+    console.log("chat message in action: ", chatMessage);
+    return {
+        type: "NEW_MESSAGE",
+        chatMessage
+    };
+}

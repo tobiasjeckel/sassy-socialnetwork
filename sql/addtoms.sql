@@ -8,3 +8,7 @@ BEGIN
    END LOOP;
 END
 $do$;
+
+
+INSERT INTO chats (sender_id, message)
+VALUES (1, 'Hey this is the second message from Tom');
