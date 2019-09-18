@@ -40,6 +40,10 @@ const uploader = multer({
         fileSize: 2097152
     }
 });
+
+//momentjs to make dates and times look pretty
+const moment = require("moment");
+
 //middleware
 app.use(compression());
 app.use(express.json());
@@ -330,7 +334,10 @@ io.on("connection", function(socket) {
 
     db.getLastTenMessages()
         .then(data => {
-            // console.log(data.rows);
+            data.rows.map(
+                item => (item.created_at = moment(item.created_at).fromNow())
+            );
+
             io.sockets.emit("last-ten-messages", data.rows.reverse());
         })
         .catch(err => {
@@ -347,6 +354,7 @@ io.on("connection", function(socket) {
             .then(array => {
                 array = [...array[0].rows, ...array[1].rows];
                 const obj = { ...array[0], ...array[1] };
+                obj.created_at = moment(obj.created_at).fromNow(); //make times look pretty with momentjs
                 io.sockets.emit("new-message-from-server", obj);
             })
             .catch(err => console.log("error on promise all: ", err));
