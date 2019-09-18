@@ -2,7 +2,6 @@
 
 export default function reducer(state = {}, action) {
     if (action.type === "GET_FRIENDS_WANNABES") {
-        // console.log("GET_FRIENDS in reducers: ", action);
         state = {
             ...state,
             friendsWannabes: action.friendsWannabes

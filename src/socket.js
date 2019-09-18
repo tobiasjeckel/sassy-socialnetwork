@@ -8,13 +8,9 @@ export const init = store => {
         socket = io.connect();
         socket.on("new-message-from-server", msg => {
             store.dispatch(chatMessage(msg));
-            console.log(`
-                received msg from server: ${msg}
-                `);
         });
 
         socket.on("last-ten-messages", msgs => {
-            console.log("last ten msg from server: ", msgs);
             store.dispatch(chatMessages(msgs));
         });
     }

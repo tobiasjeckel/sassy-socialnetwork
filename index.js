@@ -341,15 +341,12 @@ io.on("connection", function(socket) {
     //Object.values(onlineUsers);
 
     socket.on("new-message", msg => {
-        console.log("message received: ", msg);
-
         let addMessage = db.addMessage(id, msg);
         let getUser = db.getUserChatInfo(id);
         Promise.all([addMessage, getUser])
             .then(array => {
                 array = [...array[0].rows, ...array[1].rows];
                 const obj = { ...array[0], ...array[1] };
-                console.log(obj);
                 io.sockets.emit("new-message-from-server", obj);
             })
             .catch(err => console.log("error on promise all: ", err));
@@ -357,16 +354,3 @@ io.on("connection", function(socket) {
 });
 
 //use moment.js to make dates pretty
-
-//make db query to get last 10 chat messages
-//.then data=>
-// io.sockets.emit("chatMessages", data.rows) //array of chat messages
-
-//Deal with new chat messages
-//socket.("new message", (msg) => {
-//i. go and get all the info about the user, i.e a db query
-//ii. add chat message to db
-//iii. create a chat message object or use the data from above query
-//iv. io.sockets.emit("new chat message")
-//})
-//

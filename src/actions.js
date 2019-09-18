@@ -9,10 +9,6 @@ export function example() {
 
 export function getFriendsWannabes() {
     return axios.get("/api/friendswannabes").then(({ data }) => {
-        // console.log(
-        //     "*** logging data of friendswannabes res in action.js: ",
-        //     data
-        // );
         return {
             type: "GET_FRIENDS_WANNABES",
             friendsWannabes: data
@@ -21,7 +17,6 @@ export function getFriendsWannabes() {
 }
 
 export function acceptFriendRequest(otherUser) {
-    console.log("accept friend request for user with id: ", otherUser);
     return axios
         .post(`/api/acceptfriendrequest/${otherUser}`)
         .then(({ data }) => {
@@ -33,8 +28,6 @@ export function acceptFriendRequest(otherUser) {
 }
 
 export function unfriend(otherUser) {
-    console.log("terminate friendship for user with id: ", otherUser);
-
     return axios.post(`api/unfriend/${otherUser}`).then(() => {
         return {
             type: "UNFRIEND",
@@ -51,7 +44,6 @@ export function chatMessages(chatMessages) {
 }
 
 export function chatMessage(chatMessage) {
-    console.log("chat message in action: ", chatMessage);
     return {
         type: "NEW_MESSAGE",
         chatMessage
