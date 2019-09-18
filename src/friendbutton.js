@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "./axios";
+import { socket } from "./socket";
 
 export function FriendButton(props) {
     let otherUser = props.match;
@@ -76,6 +77,8 @@ export function FriendButton(props) {
                         });
                     }, 2000);
                     setMessage("Friend request has been sent!");
+                    socket.emit("new-friend-request-from-client", otherUser);
+                    // console.log("id of other user", otherUser);
                 })
                 .catch(err => {
                     console.log(err);

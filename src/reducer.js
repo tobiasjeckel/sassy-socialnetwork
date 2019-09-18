@@ -47,5 +47,13 @@ export default function reducer(state = {}, action) {
         };
     }
 
+    //to-do fix this
+    if (action.type === "NEW_FRIEND_REQUEST_FROM_ID") {
+        state = {
+            ...state,
+            openFriendRequests: [...state.openFriendRequests, action.userId]
+        };
+    }
+
     return state;
 }

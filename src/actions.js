@@ -49,3 +49,10 @@ export function chatMessage(chatMessage) {
         chatMessage
     };
 }
+
+export function openFriendRequest(userId) {
+    return {
+        type: "NEW_FRIEND_REQUEST_FROM_ID",
+        userId
+    };
+}

@@ -325,7 +325,34 @@ server.listen(8080, () => {
 const onlineUsers = {};
 
 io.on("connection", function(socket) {
-    console.log(`socket with id ${socket.id} is now connected`);
+    // console.log(`socket with id ${socket.id} is now connected`);
+
+    onlineUsers[socket.id] = socket.request.session.id;
+    // Object.values(onlineUsers);
+    console.log("online userss: ", onlineUsers);
+
+    socket.on("disconnect", () => {
+        delete onlineUsers[socket.id];
+    });
+
+    socket.on("new-friend-request-from-client", otherUserId => {
+        console.log(
+            `new friend request from client ${
+                onlineUsers[socket.id]
+            } for user ${otherUserId}`
+        );
+        const otherSocketId = Object.keys(onlineUsers).find(
+            key => onlineUsers[key] == otherUserId
+        ); //find socket id for user
+        // console.log(Object.keys(onlineUsers));
+        // console.log(otherSocketId);
+        // console.log(otherUserId);
+        io.to(otherSocketId).emit(
+            "new-friend-request-from-server",
+            onlineUsers[socket.id]
+        );
+    });
+
     if (!socket.request.session.id) {
         return socket.disconnect(true);
     }
@@ -343,9 +370,6 @@ io.on("connection", function(socket) {
         .catch(err => {
             console.log("error when getting last ten messages: ", err);
         });
-
-    // onlineUsers[socket.id] = socket.request.session.userId;
-    //Object.values(onlineUsers);
 
     socket.on("new-message", msg => {
         let addMessage = db.addMessage(id, msg);
