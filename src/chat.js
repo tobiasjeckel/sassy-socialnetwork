@@ -37,6 +37,12 @@ export function Chat() {
                                 key={message.messageid}
                                 className="chatmessage"
                             >
+                                <div className="avatar">
+                                    <img
+                                        src={message.avatarurl}
+                                        alt={`{message.first} {message.last}`}
+                                    />
+                                </div>
                                 <p>
                                     <b>
                                         {message.first} {message.last}

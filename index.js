@@ -318,6 +318,8 @@ server.listen(8080, () => {
 
 //server side socket code
 
+const onlineUsers = {};
+
 io.on("connection", function(socket) {
     console.log(`socket with id ${socket.id} is now connected`);
     if (!socket.request.session.id) {
@@ -328,41 +330,29 @@ io.on("connection", function(socket) {
 
     db.getLastTenMessages()
         .then(data => {
-            console.log(data.rows);
+            // console.log(data.rows);
             io.sockets.emit("last-ten-messages", data.rows.reverse());
         })
         .catch(err => {
             console.log("error when getting last ten messages: ", err);
         });
 
+    // onlineUsers[socket.id] = socket.request.session.userId;
+    //Object.values(onlineUsers);
+
     socket.on("new-message", msg => {
         console.log("message received: ", msg);
-        // io.sockets.emit("message-from-server", msg);
-        //do all the stuff here
-        let userData;
-        //TODO - fix this whole thing with async
-        db.addMessage(id, msg)
-            .then(mdata => {
-                console.log(mdata.rows[0]);
-                let messageData = mdata.rows[0];
-                db.getUserChatInfo(id)
-                    .then(udata => {
-                        userData = udata.rows[0];
-                        io.sockets.emit("new-message-from-server", [
-                            ...messageData,
-                            ...userData
-                        ]);
-                    })
-                    .catch(err => {
-                        console.log(
-                            "error when getting user data after adding message: ",
-                            err
-                        );
-                    });
+
+        let addMessage = db.addMessage(id, msg);
+        let getUser = db.getUserChatInfo(id);
+        Promise.all([addMessage, getUser])
+            .then(array => {
+                array = [...array[0].rows, ...array[1].rows];
+                const obj = { ...array[0], ...array[1] };
+                console.log(obj);
+                io.sockets.emit("new-message-from-server", obj);
             })
-            .catch(err => {
-                console.log("err when adding message: ", err);
-            });
+            .catch(err => console.log("error on promise all: ", err));
     });
 });
 
@@ -379,3 +369,4 @@ io.on("connection", function(socket) {
 //iii. create a chat message object or use the data from above query
 //iv. io.sockets.emit("new chat message")
 //})
+//
