@@ -77,14 +77,6 @@ class App extends React.Component {
                             <div className="logo">
                                 <Logo />
                             </div>
-                            <div className="search">
-                                <input type="search" /> <button>Search</button>
-                            </div>
-                            <div className="newfriendrequest">
-                                {this.props.newFriendRequest && (
-                                    <p>New friend request!</p>
-                                )}
-                            </div>
                             <div>
                                 <Avatar
                                     first={this.state.first}
@@ -95,8 +87,18 @@ class App extends React.Component {
                             </div>
                         </div>
                         <div className="topnav">
-                            <Link to={`/users`}>Meet new people</Link> |
-                            <Link to={`/friends`}>My Friends</Link> |
+                            <Link to={`/`}>Home</Link> |
+                            <Link to={`/users`}>Browse</Link> |
+                            <Link to={`/friends`}>
+                                My Friends{" "}
+                                {this.props.newFriendRequest && (
+                                    <React.Fragment>
+                                        (New friend request!)
+                                    </React.Fragment>
+                                )}
+                            </Link>
+                            {" | "}
+                            <Link to={`/chat`}>Messages</Link>|
                             <a href="/logout">Log out</a>
                         </div>
                         <div>
@@ -137,7 +139,7 @@ class App extends React.Component {
                         <Route path="/friends" component={Friends} />
                     </div>
                     <div>
-                        <Route exact path="/chat" component={Chat} />
+                        <Route path="/chat" component={Chat} />
                     </div>
                 </div>
             </BrowserRouter>

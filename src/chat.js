@@ -20,8 +20,8 @@ export function Chat() {
     }, [chatMessages]);
 
     return (
-        <div>
-            <h1>Chat Room</h1>
+        <div className="component">
+            <h1>📨 MySpace Messenger</h1>
             <div className="chatmessages" ref={elemRef}>
                 {chatMessages &&
                     chatMessages.map(message => {

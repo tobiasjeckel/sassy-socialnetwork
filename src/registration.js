@@ -49,7 +49,7 @@ export default class Registration extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="component">
                 {this.state.error && (
                     <h2>Ooops, something went wrong. Please try again!</h2>
                 )}

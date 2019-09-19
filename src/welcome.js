@@ -18,11 +18,8 @@ export default class Welcome extends React.Component {
                                 <img src="/assets/myspaceLogoDotcom.gif" />
                             </a>
                         </div>
-                        <div className="search">
-                            <input type="search" /> <button>Search</button>
-                        </div>
                     </div>
-                    <div className="topnav">Register</div>
+                    <div className="topnav"></div>
                     <div>
                         <Route exact path="/" component={Registration} />
                         <Route path="/login" component={Login} />

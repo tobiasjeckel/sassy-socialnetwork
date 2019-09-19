@@ -34,9 +34,8 @@ export default function Friends() {
     }, []);
 
     return (
-        <div>
-            <h1>My Friends </h1>
-            <h3>These people are wannabes and want to be your friends</h3>
+        <div className="component">
+            <h3>Friend Request Manager</h3>
             <div>
                 {wannabes &&
                     wannabes.map(wannabe => {

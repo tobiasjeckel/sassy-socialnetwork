@@ -49,7 +49,7 @@ export default function FindPeople() {
     }, [users]);
 
     return (
-        <div>
+        <div className="component">
             <h1>Find People</h1>
             <input
                 type="text"

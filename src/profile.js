@@ -12,7 +12,7 @@ export default function Profile({
     setBio
 }) {
     return (
-        <div>
+        <div className="component">
             <h1>
                 Hi {first} {last}!
             </h1>

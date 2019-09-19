@@ -31,7 +31,7 @@ export class OtherProfile extends React.Component {
     render() {
         let fullName = this.state.first + " " + this.state.last;
         return (
-            <div>
+            <div className="component">
                 <h1>
                     Profile of {this.state.first} {this.state.last}
                 </h1>

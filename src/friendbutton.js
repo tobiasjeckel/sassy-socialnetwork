@@ -51,11 +51,6 @@ export function FriendButton(props) {
     }, []);
 
     const onClick = () => {
-        // console.log(
-        //     "friend button clicked with value and user id ",
-        //     buttonType.value,
-        //     otherUser
-        // );
         setDisabled(true);
         setTimeout(function() {
             setDisabled(false);
