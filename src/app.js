@@ -9,8 +9,15 @@ import { BrowserRouter, Route, Link } from "react-router-dom";
 import FindPeople from "./findpeople";
 import Friends from "./friends";
 import { Chat } from "./chat";
+import { connect } from "react-redux";
 
-export class App extends React.Component {
+const mapStateToProps = function(state) {
+    return {
+        newFriendRequest: state.newFriendRequest
+    };
+};
+
+class App extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -73,6 +80,11 @@ export class App extends React.Component {
                             <div className="search">
                                 <input type="search" /> <button>Search</button>
                             </div>
+                            <div className="newfriendrequest">
+                                {this.props.newFriendRequest && (
+                                    <p>New friend request!</p>
+                                )}
+                            </div>
                             <div>
                                 <Avatar
                                     first={this.state.first}
@@ -132,3 +144,5 @@ export class App extends React.Component {
         );
     }
 }
+
+export default connect(mapStateToProps)(App);

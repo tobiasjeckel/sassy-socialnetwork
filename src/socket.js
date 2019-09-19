@@ -1,4 +1,4 @@
-import { chatMessages, chatMessage, openFriendRequests } from "./actions"; //add chatMessage
+import { chatMessages, chatMessage, newFriendRequest } from "./actions"; //add chatMessage
 import * as io from "socket.io-client";
 
 export let socket;
@@ -16,8 +16,8 @@ export const init = store => {
 
         socket.on("new-friend-request-from-server", userId => {
             console.log(`new friend request from server from: ${userId}`);
-            alert(`New friend request from user ${userId}`);
-            store.dispatch(openFriendRequests(userId));
+            // alert(`New friend request from user ${userId}`);
+            store.dispatch(newFriendRequest(userId));
         });
     }
 };

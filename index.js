@@ -384,5 +384,3 @@ io.on("connection", function(socket) {
             .catch(err => console.log("error on promise all: ", err));
     });
 });
-
-//use moment.js to make dates pretty

@@ -47,11 +47,17 @@ export default function reducer(state = {}, action) {
         };
     }
 
-    //to-do fix this
-    if (action.type === "NEW_FRIEND_REQUEST_FROM_ID") {
+    if (action.type === "NEW_FRIEND_REQUEST") {
         state = {
             ...state,
-            wannabes: [...state.wannabes, action.userId]
+            newFriendRequest: action.newFriendRequest
+        };
+    }
+
+    if (action.type === "VIEW_FRIEND_REQUEST") {
+        state = {
+            ...state,
+            newFriendRequest: action.newFriendRequest
         };
     }
 

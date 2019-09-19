@@ -1,6 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getFriendsWannabes, acceptFriendRequest, unfriend } from "./actions";
+import {
+    getFriendsWannabes,
+    acceptFriendRequest,
+    unfriend,
+    viewFriendRequest
+} from "./actions";
 
 export default function Friends() {
     const friends = useSelector(state => {
@@ -25,6 +30,7 @@ export default function Friends() {
 
     useEffect(() => {
         dispatch(getFriendsWannabes());
+        dispatch(viewFriendRequest());
     }, []);
 
     return (

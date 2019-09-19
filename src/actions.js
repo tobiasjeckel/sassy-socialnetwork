@@ -50,9 +50,16 @@ export function chatMessage(chatMessage) {
     };
 }
 
-export function openFriendRequests(id) {
+export function newFriendRequest() {
     return {
-        type: "NEW_FRIEND_REQUEST_FROM_ID",
-        id
+        type: "NEW_FRIEND_REQUEST",
+        newFriendRequest: true
+    };
+}
+
+export function viewFriendRequest() {
+    return {
+        type: "VIEW_FRIEND_REQUEST",
+        newFriendRequest: false
     };
 }
