@@ -38,7 +38,9 @@ export class OtherProfile extends React.Component {
                 <br />
                 <p>{this.state.bio}</p>
                 <br />
-                <img src={this.state.avatarurl} alt={fullName} />
+                <div className="largeAvatar">
+                    <img src={this.state.avatarurl} alt={fullName} />
+                </div>
                 <br />
                 <FriendButton match={this.props.match.params.id} />
             </div>

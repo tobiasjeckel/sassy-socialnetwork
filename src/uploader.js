@@ -10,19 +10,23 @@ export default class Uploader extends React.Component {
     }
     render() {
         return (
-            <div>
-                <h1 onClick={this.props.hideModal}>X</h1>
-                <h3>Upload your profile picture here!</h3>
-                <form>
-                    <input
-                        id="fileinput"
-                        onChange={this.handleChange}
-                        name="file"
-                        type="file"
-                        accept="image/*"
-                    ></input>
-                    <button onClick={this.handleClick}>submit</button>
-                </form>
+            <div id="overlaybackground">
+                <div id="overlaycontent">
+                    <h1 id="close" onClick={this.props.hideModal}>
+                        X
+                    </h1>
+                    <h3>Upload your profile picture here!</h3>
+                    <form>
+                        <input
+                            id="fileinput"
+                            onChange={this.handleChange}
+                            name="file"
+                            type="file"
+                            accept="image/*"
+                        ></input>
+                        <button onClick={this.handleClick}>submit</button>
+                    </form>
+                </div>
             </div>
         );
     }
