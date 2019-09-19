@@ -51,7 +51,7 @@ export default function reducer(state = {}, action) {
     if (action.type === "NEW_FRIEND_REQUEST_FROM_ID") {
         state = {
             ...state,
-            openFriendRequests: [...state.openFriendRequests, action.userId]
+            wannabes: [...state.wannabes, action.userId]
         };
     }
 

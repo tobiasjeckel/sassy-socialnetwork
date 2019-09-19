@@ -50,9 +50,9 @@ export function chatMessage(chatMessage) {
     };
 }
 
-export function openFriendRequest(userId) {
+export function openFriendRequests(id) {
     return {
         type: "NEW_FRIEND_REQUEST_FROM_ID",
-        userId
+        id
     };
 }
