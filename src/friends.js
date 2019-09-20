@@ -41,10 +41,12 @@ export default function Friends() {
                     wannabes.map(wannabe => {
                         return (
                             <div className="friendcard" key={wannabe.id}>
-                                <img
-                                    src={wannabe.avatarurl}
-                                    alt={`${wannabe.first} ${wannabe.last}`}
-                                />
+                                <div className="largeAvatar">
+                                    <img
+                                        src={wannabe.avatarurl}
+                                        alt={`${wannabe.first} ${wannabe.last}`}
+                                    />
+                                </div>
                                 <p>
                                     {wannabe.first} {wannabe.last}
                                 </p>
@@ -71,10 +73,12 @@ export default function Friends() {
                     friends.map(friend => {
                         return (
                             <div className="friendcard" key={friend.id}>
-                                <img
-                                    src={friend.avatarurl}
-                                    alt={`${friend.first} ${friend.last}`}
-                                />
+                                <div className="largeAvatar">
+                                    <img
+                                        src={friend.avatarurl}
+                                        alt={`${friend.first} ${friend.last}`}
+                                    />
+                                </div>
                                 <p>
                                     {friend.first} {friend.last}
                                 </p>

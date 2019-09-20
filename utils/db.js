@@ -165,3 +165,12 @@ exports.getUserChatInfo = function(id) {
         [id]
     );
 };
+
+exports.addTom = function(id) {
+    return db.query(
+        `INSERT INTO friendships (receiver_id, sender_id, accepted)
+        VALUES ($1, 1, TRUE)
+        RETURNING receiver_id`,
+        [id]
+    );
+};

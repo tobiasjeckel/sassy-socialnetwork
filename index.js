@@ -14,7 +14,10 @@ const cookieSessionMiddleware = cookieSession({
 });
 
 const server = require("http").Server(app);
-const io = require("socket.io")(server, { origins: "localhost:8080" }); //space separated list which allows socket.io connections -change this when deploying to Heroku
+const secrets = require("./secrets");
+const io = require("socket.io")(server, {
+    origins: `localhost:8080 http://192.168.50.193:8080 ${secrets.MY_IP}`
+}); //space separated list which allows socket.io connections -change this when deploying to Heroku
 
 //file upload
 const multer = require("multer");
@@ -87,9 +90,16 @@ app.post("/registration", (req, res) => {
                     req.session.id = data.rows[0].id;
                     req.session.first = data.rows[0].first;
                     console.log("session id is: ", req.session.id);
-                    res.json({
-                        message: "Registration successful"
-                    });
+                    db.addTom(data.rows[0].id)
+                        .then(() => {
+                            console.log("Tom was added as friend");
+                            res.json({
+                                message: "Registration successful"
+                            });
+                        })
+                        .catch(err =>
+                            console.log("error when adding Tom", err)
+                        );
                 })
                 .catch(err => {
                     console.log(err);

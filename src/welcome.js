@@ -20,7 +20,7 @@ export default class Welcome extends React.Component {
                         </div>
                     </div>
                     <div className="topnav"></div>
-                    <div>
+                    <div className="reglog">
                         <Route exact path="/" component={Registration} />
                         <Route path="/login" component={Login} />
                         <Route exact path="/" component={this.LoginLink} />

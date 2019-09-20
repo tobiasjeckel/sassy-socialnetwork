@@ -62,7 +62,7 @@ export default function FindPeople() {
                 <br />
                 {users &&
                     users.map(user => (
-                        <div key={user.id}>
+                        <div key={user.id} className="friendcard">
                             <div className="largeAvatar">
                                 <Link to={`/user/${user.id}`}>
                                     <img
@@ -82,7 +82,7 @@ export default function FindPeople() {
                     <div>
                         <h2>Check out the new users on MySpace</h2>
                         {newUsers.map(user => (
-                            <div key={user.id}>
+                            <div key={user.id} className="friendcard">
                                 <div className="largeAvatar">
                                     <Link to={`/user/${user.id}`}>
                                         <img
