@@ -16,7 +16,7 @@ const cookieSessionMiddleware = cookieSession({
 const server = require("http").Server(app);
 const secrets = require("./secrets");
 const io = require("socket.io")(server, {
-    origins: `localhost:8080 http://192.168.50.193:8080 ${secrets.MY_IP}`
+    origins: `localhost:8080 ${secrets.MY_IP}`
 }); //space separated list which allows socket.io connections -change this when deploying to Heroku
 
 //file upload
