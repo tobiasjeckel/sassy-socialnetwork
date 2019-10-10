@@ -22,7 +22,7 @@ exports.upload = function(req, res, next) {
 
     const promise = s3
         .putObject({
-            Bucket: "spicedling",
+            Bucket: "tobi-myspace-bucket",
             ACL: "public-read",
             Key: filename,
             Body: fs.createReadStream(path),
