@@ -4,9 +4,13 @@
 
 ## Preview
 
-### Registration, Login and edit profile
+### Registration, edit profile and browse for friends
 
-### Browse for friends
+![Register, edit profile and browse for friends](https://github.com/tobiasjeckel/sassy-socialnetwork/blob/master/gifs/editprofile.gif)
+
+### Accept friend request and chat
+
+![Accept friend request and chat](https://github.com/tobiasjeckel/sassy-socialnetwork/blob/master/gifs/chat.gif)
 
 ### Chat room
 

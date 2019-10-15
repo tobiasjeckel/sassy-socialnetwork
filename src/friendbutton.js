@@ -8,7 +8,6 @@ export function FriendButton(props) {
     const [buttonType, setButtonType] = useState({});
     const [message, setMessage] = useState("");
     const [disabled, setDisabled] = useState(false);
-    // const onClick = useHandleSubmit(buttonType, otherUser);
 
     useEffect(() => {
         console.log("id of profile that is being viewed: ", otherUser);
@@ -163,31 +162,3 @@ export function FriendButton(props) {
         </div>
     );
 }
-
-// function useHandleSubmit(buttonType, otherUser) {
-//     const [setButtonType] = useState({});
-//
-//     const onClick = () => {
-//         console.log(
-//             "friend button clicked with value and user id ",
-//             buttonType.value,
-//             otherUser
-//         );
-//
-//         if (buttonType.value == "sendfriendrequest") {
-//             axios
-//                 .post(`/api/sendfriendrequest/${otherUser}`)
-//                 .then(res => {
-//                     console.log(res);
-//                     setButtonType("cancelfriendrequest");
-//                 })
-//                 .catch(err => {
-//                     console.log(err);
-//                 });
-//         }
-//
-//         //add more routes here
-//     };
-//
-//     return onClick;
-// }

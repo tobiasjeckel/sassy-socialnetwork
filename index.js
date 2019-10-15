@@ -64,11 +64,6 @@ app.use(function(req, res, next) {
     next();
 });
 
-// app.use(
-//     express.urlencoded({
-//         extended: false
-//     })
-// );
 app.use(express.static("./public")); //for css
 
 if (process.env.NODE_ENV != "production") {
@@ -151,12 +146,10 @@ app.post("/login", (req, res) => {
 app.post("/uploadAvatar", uploader.single("file"), s3.upload, (req, res) => {
     const { filename } = req.file;
     const url = config.s3Url + filename;
-    // const { title, username, description } = req.body;
 
     db.uploadAvatar(req.session.id, url)
         .then(data => {
             res.json(data.rows[0]);
-            // console.log("log of data from index.js", data.rows);
         })
         .catch(err => {
             console.log("error when adding image to database: ", err);
@@ -178,7 +171,6 @@ app.get("/logout", function(req, res) {
     res.redirect("/welcome");
 });
 app.get("/welcome", (req, res) => {
-    // res.render();
     res.sendFile(__dirname + "/index.html");
 });
 
@@ -187,7 +179,6 @@ app.get("/api/user/:id", (req, res) => {
     let myId = req.session.id;
     db.getUser(id)
         .then(data => {
-            // console.log(data.rows[0]);
             res.json({
                 first: data.rows[0].first,
                 last: data.rows[0].last,
@@ -325,7 +316,6 @@ app.get("*", (req, res) => {
     }
 });
 
-//changed from app.listen to server.listen
 server.listen(8080, () => {
     console.log("I'm listeningggg.");
 });
@@ -354,9 +344,7 @@ io.on("connection", function(socket) {
         const otherSocketId = Object.keys(onlineUsers).find(
             key => onlineUsers[key] == otherUserId
         ); //find socket id for user
-        // console.log(Object.keys(onlineUsers));
-        // console.log(otherSocketId);
-        // console.log(otherUserId);
+
         io.to(otherSocketId).emit(
             "new-friend-request-from-server",
             onlineUsers[socket.id]
