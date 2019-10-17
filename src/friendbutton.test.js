@@ -12,8 +12,6 @@ test("when page renders, the send friend request button renders after axios requ
 
     const { container } = render(<FriendButton match={2} />);
 
-    // expect(container.querySelector("button").value).toBe("sendfriendrequest");
-
     const elem = await waitForElement(() => container.querySelector("button"));
     console.log(elem.innerHTML);
     expect(elem.innerHTML).toBe("Send friend request");

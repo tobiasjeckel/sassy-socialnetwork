@@ -3,7 +3,6 @@ import Avatar from "./avatar";
 import { BioEditor } from "./bioeditor";
 
 export default function Profile({
-    id,
     first,
     last,
     avatarurl,
@@ -28,5 +27,3 @@ export default function Profile({
         </div>
     );
 }
-
-//Profile pic is bigger here

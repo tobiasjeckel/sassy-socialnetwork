@@ -30,8 +30,6 @@ export default class Login extends React.Component {
                     // console.log(this.state);
                 } else {
                     location.replace("/");
-                    console.log(res.data.message);
-                    console.log(res.session.id);
                 }
             })
             .catch(err => {

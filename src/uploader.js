@@ -33,7 +33,6 @@ export default class Uploader extends React.Component {
 
     handleClick(e) {
         e.preventDefault();
-        // console.log("this: ", this);
         var formData = new FormData();
         formData.append("file", this.state.file);
         axios

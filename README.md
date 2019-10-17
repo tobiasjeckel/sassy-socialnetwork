@@ -1,6 +1,6 @@
 # Sassy social network
 
-'Sassy Social Network' is a fictious social network that pays homage to the classic MySpace design of 2008 that we all loved. It was made during my time at Spiced Academy. Main goal of the project was to improve my skills at React, Redux, AWS S3 and socket.io.
+'Sassy social etwork' is a fictious social network that pays homage to the classic MySpace design of 2008 that we all loved. It was made during my time at Spiced Academy. Main goal of the project was to improve my skills at React, Redux, AWS S3 and socket.io.
 
 ## Preview
 
@@ -20,9 +20,9 @@
 -   React, React Router, React hooks
 -   Redux
 -   PostgreSQL
--   socket.io
--   Image Upload: Multer, AWS S3
--   momentjs
+-   Socket.io
+-   Image Upload: multer, AWS S3
+-   Momentjs
 
 # Features
 
@@ -32,3 +32,4 @@
 -   Friend request manager: accept or reject pending friend requests, terminate existing friendships
 -   Tom is automatically added as your first friend 😊
 -   Chatroom: real-time chatroom to chat with other people on the network. Implemented with socket.io.
+-   Users are notified in real-time when they receive a friend-request from another user

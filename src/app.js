@@ -53,7 +53,6 @@ class App extends React.Component {
     }
 
     hideModal() {
-        //hide the modal
         this.setState({
             uploaderIsVisible: false
         });

@@ -12,16 +12,12 @@ export class BioEditor extends React.Component {
         this.handleClick = this.handleClick.bind(this);
         this.hideEdit = this.hideEdit.bind(this);
     }
-    componentDidMount() {
-        // console.log("BioEditor mounted");
-        // console.log(this.state);
-    }
+    componentDidMount() {}
     editMode(e) {
         e.preventDefault(e);
         this.setState({
             editMode: true
         });
-        // console.log(this.state.editMode);
     }
 
     handleClick(e) {
@@ -63,9 +59,7 @@ export class BioEditor extends React.Component {
                 <button onClick={this.editMode}>Edit Bio</button>
             </div>
         );
-        // let elem = "";
         if (this.state.editMode) {
-            // console.log(elem);
             elem = (
                 <div>
                     <h2>Type here to edit your bio</h2>
@@ -87,7 +81,6 @@ export class BioEditor extends React.Component {
                 </div>
             );
         }
-
         return elem;
     }
 }

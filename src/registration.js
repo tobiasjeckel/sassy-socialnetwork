@@ -27,11 +27,8 @@ export default class Registration extends React.Component {
             })
             .then(res => {
                 if (res.data.message == "error") {
-                    // console.log(res.data.message);
                     this.handleError();
-                    // console.log(this.state);
                 } else {
-                    // console.log(res.data.session.id);
                     location.replace("/");
                 }
             })

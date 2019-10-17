@@ -16,7 +16,6 @@ export const init = store => {
 
         socket.on("new-friend-request-from-server", userId => {
             console.log(`new friend request from server from: ${userId}`);
-            // alert(`New friend request from user ${userId}`);
             store.dispatch(newFriendRequest(userId));
         });
     }
